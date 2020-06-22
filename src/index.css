@@ -1,0 +1,31 @@
+:root {
+  --first-color: #00005c;
+  --second-color: #6a097d;
+  --third-color: #c060a1;
+  --fourth-color: #ffdcb4;
+}
+
+/* 
+  --first-color: rgba(0, 0, 92, 1);
+  --second-color: rgba(106, 9, 125, 1);
+  --third-color: rgba(192, 96, 161, 1);
+  --fourth-color: rgba(255, 220, 180, 1);
+*/
+
+html {
+  font-size: 14px;
+
+  /* background-image: linear-gradient(
+    to right,
+    var(--fourth-color),
+    var(--second-color)
+  ); */
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}

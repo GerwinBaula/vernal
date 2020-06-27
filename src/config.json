@@ -1,0 +1,9 @@
+{
+  "rootUrl": "https://api.imgur.com",
+
+  "clientId": "cbd942d9cc17824",
+  "clientSecret": "7953f8d40f9b10fcb67584980e85c867be5ae3a1",
+
+  "prodCallbackURL": "https://vernal.netlify.app/oauth2/callback",
+  "devCallbackURL": "https://localhost:3000/oauth2/callback"
+}

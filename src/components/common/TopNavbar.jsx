@@ -1,16 +1,40 @@
 import React, { useContext } from "react";
-import { StateContext, DispatchContext } from "../state/contexts";
-import { getLoggedInStatus } from "../state/selectors";
-import { Link } from "react-router-dom";
+import MobileMenu from "./MobileMenu";
+import { StateContext } from "../state/contexts";
+import { getLoggedInStatus, getCurrentUser } from "../state/selectors";
+import { Link, useHistory } from "react-router-dom";
 import { css } from "@emotion/core";
+import config from "../../config";
+import qs from "qs";
 
 const breakpoints = [1024, 575];
 const mq = breakpoints.map((bp) => `@media (max-width: ${bp}px)`);
 
 function TopNavbar() {
-  const dispatch = useContext(DispatchContext);
   const state = useContext(StateContext);
   const loggedInStatus = getLoggedInStatus(state);
+  const user = getCurrentUser(state);
+  const history = useHistory();
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log("submitted");
+  }
+
+  function handleInitializeLogin() {
+    const queryString = {
+      client_id: config.clientId,
+      response_type: "token",
+    };
+
+    window.location = `${config.rootUrl}/oauth2/authorize?${qs.stringify(
+      queryString
+    )}`;
+  }
+
+  function handleLogout() {
+    history.push("/logout");
+  }
 
   return (
     <>
@@ -32,22 +56,32 @@ function TopNavbar() {
       >
         <div className="container-xl p-0">
           <div className="d-flex align-items-center justify-content-between">
-            <div
+            <form
+              onSubmit={handleSubmit}
               className="d-flex flex-fill d-sm-none position-relative"
               css={css`
                 border: 1px solid var(--text-primary);
                 border-radius: 50px;
               `}
             >
-              <div
+              <button
+                type="submit"
                 className="m-0 pl-2 py-2 pr-1 d-flex justify-content-center align-items-center"
                 css={css`
+                  border-radius: 50px 0 0 50px;
+                  background-color: var(--bg-primary);
+                  border: 1px solid var(--bg-primary)
+                  border-right: none;
                   color: var(--text-primary);
                   font-size: 20px;
+
+                  &:focus {
+                    outline: none;
+                  }
                 `}
               >
                 <ion-icon name="search-outline"></ion-icon>
-              </div>
+              </button>
               <input
                 type="text"
                 className="w-100 mr-3"
@@ -117,8 +151,7 @@ function TopNavbar() {
                   Vestibulum at eros
                 </li>
               </ul> */}
-            </div>
-            {/* Set some condition in the margins and paddings */}
+            </form>
             <a
               href="/"
               className={
@@ -133,262 +166,15 @@ function TopNavbar() {
                   color: var(--text-primary);
                 `}
               >
-                Verix
+                Vernal
               </h3>
             </a>
             {/* Mobile phones */}
             {loggedInStatus ? (
-              <div className="d-block d-sm-none position-relative">
-                <input
-                  type="checkbox"
-                  className="d-none"
-                  id="toggle-hamburger"
-                  css={css`
-                    &:checked ~ .hamburger {
-                      // transform: rotate(360deg);
-                      background: transparent;
-                    }
-
-                    &:checked ~ .hamburger::before {
-                      transform: rotate(45deg);
-                    }
-
-                    &:checked ~ .hamburger::after {
-                      transform: rotate(-45deg);
-                    }
-                    &:checked ~ .mobile-menu {
-                      opacity: 1;
-                      left: -215px;
-                    }
-                  `}
-                />
-                <label
-                  htmlFor="toggle-hamburger"
-                  className="mt-3 hamburger"
-                  css={css`
-                  width: 30px;
-                  height: 4px;
-                  background: var(--text-primary);
-                  border-radius: 5px;
-                  transition: var(--transition-speed);
-                  position: relative;
-
-                  &::before,
-                  &::after {
-                    content: '';
-                    position: absolute;
-                    width: 30px;
-                    height 4px;
-                    background: var(--text-primary);
-                    border-radius: 5px;
-                    transition: var(--transition-speed);
-                  }
-
-                  &::before {
-                    transform: translateY(-9px);
-                  }
-
-                  &::after {
-                    transform: translateY(9px);
-                  }
-              `}
-                ></label>
-                <div
-                  className="mobile-menu position-absolute"
-                  css={css`
-                    top: 40px;
-                    left: 100px;
-                    // left: -215px;
-                    min-height: 100px;
-                    width: 245px;
-                    border: 1px solid var(--mobile-sidebar-border);
-                    background-color: var(--mobile-sidebar-bg);
-                    border-radius: 5px;
-                    opacity: 0;
-                    box-shadow: 0px 0.5px 3px 0px var(--text-primary-color);
-                    transition: var(--transition-speed);
-                  `}
-                >
-                  <div
-                    className="d-flex align-items-center p-3"
-                    css={css`
-                      border-bottom: 1px solid var(--mobile-sidebar-border);
-                    `}
-                  >
-                    <div className="mr-3">
-                      <div
-                        css={css`
-                          height: 40px;
-                          width: 40px;
-                          border: 1px solid var(--avatar-border);
-                          border-radius: 50px;
-                        `}
-                      ></div>
-                    </div>
-                    <div className="flex-fill p-0 d-flex flex-column justify-content-center align-items-start">
-                      <h5
-                        className="m-0"
-                        css={css`
-                          color: var(--mobile-sidebar-text);
-                        `}
-                      >
-                        Athea Verix
-                      </h5>
-                      <p
-                        className="m-0"
-                        css={css`
-                          color: var(--mobile-sidebar-text);
-                        `}
-                      >
-                        Gago na sweeet pa! :*
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    className="px-3 py-1"
-                    css={css`
-                      border-bottom: 1px solid var(--mobile-sidebar-border);
-                    `}
-                  >
-                    <div className="row">
-                      <Link
-                        to="/posts"
-                        className="col-sm py-2 d-flex align-items-center"
-                        css={css`
-                          ion-icon[name="reader-outline"] {
-                            margin-left: 8px;
-                            font-size: 26px;
-                            color: var(--mobile-icon);
-                          }
-                        `}
-                      >
-                        <ion-icon name="reader-outline"></ion-icon>
-                        <span
-                          className="ml-4"
-                          css={css`
-                            color: var(--mobile-sidebar-text);
-                          `}
-                        >
-                          Posts
-                        </span>
-                      </Link>
-                      <Link
-                        to="/comments"
-                        className="col-sm py-2 d-flex align-items-center"
-                        css={css`
-                          ion-icon[name="chatbubble-ellipses-outline"] {
-                            margin-left: 8px;
-                            font-size: 26px;
-                            color: var(--mobile-icon);
-                          }
-                        `}
-                      >
-                        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
-                        <span
-                          className="ml-4"
-                          css={css`
-                            color: var(--mobile-sidebar-text);
-                          `}
-                        >
-                          Comments
-                        </span>
-                      </Link>
-                      <Link
-                        to="/profile"
-                        className="col-sm py-2 d-flex align-items-center"
-                        css={css`
-                          ion-icon[name="person-outline"] {
-                            margin-left: 8px;
-                            font-size: 26px;
-                            color: var(--mobile-sidebar-text);
-                          }
-                        `}
-                      >
-                        <ion-icon name="person-outline"></ion-icon>
-                        <span
-                          className="ml-4"
-                          css={css`
-                            color: var(--mobile-sidebar-text);
-                          `}
-                        >
-                          Profile
-                        </span>
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="px-3 py-1">
-                    <div className="row">
-                      <Link
-                        to="/new-post"
-                        className="col-sm py-2 d-flex align-items-center"
-                        css={css`
-                          ion-icon[name="add-circle-outline"] {
-                            margin-left: 8px;
-                            font-size: 26px;
-                            color: var(--mobile-icon);
-                          }
-                        `}
-                      >
-                        <ion-icon name="add-circle-outline"></ion-icon>
-                        <span
-                          className="ml-4"
-                          css={css`
-                            color: var(--mobile-sidebar-text);
-                          `}
-                        >
-                          New Post
-                        </span>
-                      </Link>
-                      <Link
-                        to="/settings"
-                        className="col-sm py-2 d-flex align-items-center"
-                        css={css`
-                          ion-icon[name="settings-outline"] {
-                            margin-left: 8px;
-                            font-size: 26px;
-                            color: var(--mobile-icon);
-                          }
-                        `}
-                      >
-                        <ion-icon name="settings-outline"></ion-icon>
-                        <span
-                          className="ml-4"
-                          css={css`
-                            color: var(--mobile-sidebar-text);
-                          `}
-                        >
-                          Settings
-                        </span>
-                      </Link>
-                      <div
-                        onClick={() => dispatch({ type: "logout" })}
-                        className="col-sm py-2 d-flex align-items-center"
-                        css={css`
-                          ion-icon[name="log-out-outline"] {
-                            margin-left: 8px;
-                            font-size: 26px;
-                            color: var(--mobile-icon);
-                          }
-                        `}
-                      >
-                        <ion-icon name="log-out-outline"></ion-icon>
-                        <span
-                          className="ml-4"
-                          css={css`
-                            color: var(--mobile-sidebar-text);
-                          `}
-                        >
-                          Logout
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <MobileMenu user={user} />
             ) : (
-              <a
-                href="#"
-                onClick={() => dispatch({ type: "initializeLogin" })}
+              <span
+                onClick={() => handleInitializeLogin()}
                 className="py-2 px-4 d-block d-block d-sm-none"
                 css={css`
                   border: 1px solid var(--text-primary);
@@ -403,7 +189,7 @@ function TopNavbar() {
                 `}
               >
                 Login
-              </a>
+              </span>
             )}
             {/* Desktop to tablet */}
             <div className="flex-fill mx-2 mx-lg-4 px-0 px-lg-2 d-none d-sm-flex justify-content-center">
@@ -412,7 +198,7 @@ function TopNavbar() {
                   width: `${!loggedInStatus ? "60%" : "75%"}`,
                 }}
               >
-                <div className="row position-relative">
+                <form onSubmit={handleSubmit} className="row position-relative">
                   <div className="col px-0">
                     <input
                       type="text"
@@ -433,15 +219,20 @@ function TopNavbar() {
                     />
                   </div>
                   <div className="px-0 d-flex justify-content-center align-items-center">
-                    <a
-                      href="#"
+                    <button
+                      type="submit"
                       className="h-100 d-flex align-items-center pr-3"
                       css={css`
                         border-radius: 0 50px 50px 0;
                         border: 1px solid var(--text-primary);
+                        background-color: var(--bg-primary);
                         border-left: none;
                         color: var(--text-primary);
                         font-size: 18px;
+
+                        &:focus {
+                          outline: none;
+                        }
 
                         &:hover {
                           color: var(--text-primary);
@@ -449,7 +240,7 @@ function TopNavbar() {
                       `}
                     >
                       <ion-icon name="search-outline"></ion-icon>
-                    </a>
+                    </button>
                   </div>
                   {/* <ul
                     className="list-group position-absolute w-100"
@@ -504,7 +295,7 @@ function TopNavbar() {
                       Vestibulum at eros
                     </li>
                   </ul> */}
-                </div>
+                </form>
               </div>
             </div>
             <div className="d-none d-sm-inline-flex">
@@ -514,8 +305,6 @@ function TopNavbar() {
                   className="mr-2 py-2 px-3"
                   css={css`
                     color: var(--text-primary);
-                    // border-radius: 2px;
-                    // visibility: hidden;
                     transition: var(--transition-speed);
 
                     &:hover {
@@ -530,9 +319,7 @@ function TopNavbar() {
               <span
                 href="#"
                 onClick={() =>
-                  dispatch({
-                    type: `${!loggedInStatus ? "initializeLogin" : "logout"}`,
-                  })
+                  !loggedInStatus ? handleInitializeLogin() : handleLogout()
                 }
                 className="ml-2 py-2 px-4"
                 css={css`

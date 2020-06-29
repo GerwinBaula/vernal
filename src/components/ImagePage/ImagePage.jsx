@@ -1,9 +1,7 @@
 import React from "react";
-import Template from "../common/Template";
-import ImageContent from "./ImageContent";
 
 function ImagePage() {
-  return <Template content={ImageContent} />;
+  return <div className="container-fluid p-0">ImageContent</div>;
 }
 
 export default ImagePage;

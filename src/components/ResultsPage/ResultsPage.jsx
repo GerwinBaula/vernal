@@ -1,9 +1,7 @@
 import React from "react";
-import ResultsContent from "./ResultsContent";
-import Template from "../common/Template";
 
 function ResultsPage() {
-  return <Template content={ResultsContent} />;
+  return <div className="container-fluid p-0">ResultsContent</div>;
 }
 
 export default ResultsPage;

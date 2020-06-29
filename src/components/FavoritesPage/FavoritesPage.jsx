@@ -1,9 +1,7 @@
 import React from "react";
-import Template from "../common/Template";
-import FavoritesContent from "./FavoritesContent";
 
 function FavoritesPage() {
-  return <Template content={FavoritesContent} />;
+  return <div className="container-fluid p-0">FavoritesContent</div>;
 }
 
 export default FavoritesPage;

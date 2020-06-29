@@ -1,31 +1,36 @@
-import qs from "qs";
-import config from "../../config";
-
 export default function (state, action) {
-  switch (action.type) {
-    case "initializeLogin": {
-      const queryString = {
-        client_id: config.clientId,
-        response_type: "token",
-      };
+  if (action.type.endsWith("Success")) state.apiCallsInProgress--;
 
-      window.location = `${config.rootUrl}/oauth2/authorize?${qs.stringify(
-        queryString
-      )}`;
+  switch (action.type) {
+    case "apiCallBegan": {
+      state.apiCallsInProgress++;
+      return;
+    }
+
+    case "apiCallFailed": {
+      state.apiCallsInProgress--;
+      return;
+    }
+
+    case "getUserSuccess": {
+      const user = action.payload;
+      state.currentUser = user;
+      window.localStorage.setItem("current_user", JSON.stringify(user));
       return;
     }
 
     case "finalizeLogin": {
-      const query = qs.parse(action.payload.replace("#", ""));
-      state.auth.token = query.access_token;
-      window.localStorage.setItem("imgur_token", query.access_token);
+      const token = action.payload;
+      state.auth.token = token;
+      window.localStorage.setItem("imgur_token", token);
       return;
     }
 
     case "logout": {
       state.auth.token = null;
-
+      state.currentUser = {};
       window.localStorage.removeItem("imgur_token");
+      window.localStorage.removeItem("current_user");
       return;
     }
 

@@ -1,9 +1,7 @@
 import React from "react";
-import PostsPageContent from "./PostsPageContent";
-import Template from "../common/Template";
 
 function PostsPage() {
-  return <Template content={PostsPageContent} />;
+  return <div className="container-fluid p-0">PostPageContent</div>;
 }
 
 export default PostsPage;

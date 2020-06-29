@@ -1,18 +1,19 @@
 import React, { useContext } from "react";
+import SideNavbar from "./SideNavbar";
 import { StateContext } from "../state/contexts";
 import { getLoggedInStatus } from "../state/selectors";
-import SideNavbar from "../common/SideNavbar";
+import AllRoutes from "./AllRoutes";
 
 const breakpoints = [1200, 575];
 const mq = breakpoints.map((bp) => `@media (max-width: ${bp}px)`);
 
-function Template({ content: Content, routePath }) {
+function Pages() {
   const state = useContext(StateContext);
   const loggedInStatus = getLoggedInStatus(state);
 
   return (
     <div className="container-xl p-0 d-flex">
-      <SideNavbar routePath={routePath} />
+      <SideNavbar />
       <main
         className="flex-fill"
         css={{
@@ -30,10 +31,10 @@ function Template({ content: Content, routePath }) {
           },
         }}
       >
-        <Content />
+        <AllRoutes />
       </main>
     </div>
   );
 }
 
-export default Template;
+export default Pages;

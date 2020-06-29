@@ -1,9 +1,7 @@
 import React from "react";
-import SettingsContent from "./SettingsContent";
-import Template from "../common/Template";
 
 function SettingsPage() {
-  return <Template content={SettingsContent} />;
+  return <div className="container-fluid p-0">SettingsContent</div>;
 }
 
 export default SettingsPage;

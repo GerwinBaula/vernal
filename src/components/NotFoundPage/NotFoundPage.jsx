@@ -1,9 +1,7 @@
 import React from "react";
-import Template from "../common/Template";
-import NotFoundContent from "./NotFoundContent";
 
 function NotFoundPage() {
-  return <Template content={NotFoundContent} />;
+  return <div className="container-fluid p-4">NotFoundContent</div>;
 }
 
 export default NotFoundPage;

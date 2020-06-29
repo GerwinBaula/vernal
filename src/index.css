@@ -1,10 +1,10 @@
 :root {
   --first-color: #bdbcbc;
   --second-color: #505050;
-  --third-color: #636262;
-  --fourth-color: #111111;
+  --third-color: #63686e;
+  --fourth-color: #373640;
   --fifth-color: #cf424b;
-  --sixth-color: #ec0010;
+  --sixth-color: #eb1624;
 
   --text-primary: var(--first-color);
   --bg-primary: var(--second-color);
@@ -26,8 +26,11 @@
   --main-bg: var(--text-primary);
 
   --sidenav-bg: var(--text-primary);
+  --sidenav-bg-hovered: var(--bg-primary);
   --sidenav-text: var(--bg-primary);
+  --sidenav-text-hovered: var(--text-primary);
   --sidenav-icon-hovered: var(--fifth-color);
+
   --sidenav-icon-lighter: var(--third-color);
   --sidenav-icon-darker: var(--fourth-color);
   --sidenav-icon-lighter-hovered: var(--sixth-color);
@@ -53,26 +56,4 @@ a {
 
 a:hover {
   text-decoration: none;
-}
-
-.activeIcon {
-  color: var(--fifth-color);
-}
-
-.activeBackground {
-  background-color: var(--sidenav-bg);
-}
-
-.activeText {
-  color: var(--sidenav-text);
-}
-
-@media (max-width: 1200px) {
-  .activeBackground {
-    /* background-color: var(--sidenav-text); */
-  }
-
-  .activeText {
-    /* color: var(--sidenav-bg); */
-  }
 }

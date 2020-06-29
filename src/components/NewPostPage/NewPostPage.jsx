@@ -1,9 +1,7 @@
 import React from "react";
-import NewPostContent from "./NewPostContent";
-import Template from "../common/Template";
 
 function NewPostPage() {
-  return <Template content={NewPostContent} />;
+  return <div className="container-fluid p-0">NewPostContent</div>;
 }
 
 export default NewPostPage;

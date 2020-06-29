@@ -1,9 +1,7 @@
 import React from "react";
-import ProfileContent from "./ProfileContent";
-import Template from "../common/Template";
 
 function ProfilePage() {
-  return <Template content={ProfileContent} />;
+  return <div className="container-fluid p-0">ProfileContent</div>;
 }
 
 export default ProfilePage;

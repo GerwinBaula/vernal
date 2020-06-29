@@ -1,9 +1,7 @@
 import React from "react";
-import TagsContent from "./TagsContent";
-import Template from "../common/Template";
 
 function TagsPage() {
-  return <Template content={TagsContent} />;
+  return <div className="container-fluid p-0">TagsContent</div>;
 }
 
 export default TagsPage;

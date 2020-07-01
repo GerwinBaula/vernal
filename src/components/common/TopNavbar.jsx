@@ -1,19 +1,15 @@
 import React, { useContext } from "react";
-import MobileMenu from "./MobileMenu";
+import MobileMenu from "./MobileMenu/MobileMenu";
 import { StateContext } from "../state/contexts";
-import { getLoggedInStatus, getCurrentUser } from "../state/selectors";
+import { getLoggedInStatus } from "../state/selectors";
 import { Link, useHistory } from "react-router-dom";
 import { css } from "@emotion/core";
 import config from "../../config";
 import qs from "qs";
 
-const breakpoints = [1024, 575];
-const mq = breakpoints.map((bp) => `@media (max-width: ${bp}px)`);
-
 function TopNavbar() {
   const state = useContext(StateContext);
   const loggedInStatus = getLoggedInStatus(state);
-  const user = getCurrentUser(state);
   const history = useHistory();
 
   function handleSubmit(event) {
@@ -44,11 +40,11 @@ function TopNavbar() {
           backgroundColor: "var(--nav-bg)",
           borderBottom: "var(--nav-bg)",
           zIndex: "99",
-          [mq[0]]: {
+          "@media (max-width: 1200px)": {
             marginLeft: `${!loggedInStatus ? "0px" : "94px"}`,
             width: `${!loggedInStatus ? "100vw" : "calc(100vw - 94px)"}`,
           },
-          [mq[1]]: {
+          "@media (max-width: 575px)": {
             marginLeft: "0px",
             width: "100vw",
           },
@@ -171,7 +167,7 @@ function TopNavbar() {
             </a>
             {/* Mobile phones */}
             {loggedInStatus ? (
-              <MobileMenu user={user} />
+              <MobileMenu />
             ) : (
               <span
                 onClick={() => handleInitializeLogin()}

@@ -1,10 +1,10 @@
 import React, { useEffect, useContext } from "react";
-import { DispatchContext } from "../state/contexts";
+import { DispatchContext } from "../../state/contexts";
 import { Redirect } from "react-router-dom";
-import httpService from "../services/httpService";
+import httpService from "../../services/httpService";
 import qs from "qs";
 
-function AuthHandler({ location: { hash } }) {
+function LoginHandler({ location: { hash } }) {
   const dispatch = useContext(DispatchContext);
 
   useEffect(() => {
@@ -34,4 +34,4 @@ function AuthHandler({ location: { hash } }) {
   return <Redirect to="/" />;
 }
 
-export default AuthHandler;
+export default LoginHandler;

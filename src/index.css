@@ -1,40 +1,23 @@
 :root {
+  /* Dark Theme */
   --first-color: #bdbcbc;
   --second-color: #505050;
+
   --third-color: #63686e;
   --fourth-color: #373640;
-  --fifth-color: #cf424b;
+
+  --fifth-color: #d14d56;
   --sixth-color: #eb1624;
 
-  --text-primary: var(--first-color);
-  --bg-primary: var(--second-color);
-
-  --text-secondary: var(--third-color);
-  --bg-secondary: var(--fourth-color);
+  /* Light Theme */
+  --seventh-color: #efee9d;
+  --eighth-color: #fcf876;
+  --ninth-color: #fbfd8a;
+  --tenth-color: #f4e04d;
+  --eleventh-color: #fbfd8a;
+  --twelvth-color: #f4e04d;
 
   --transition-speed: 0.4s all;
-
-  --nav-bg: var(--bg-primary);
-
-  --mobile-sidebar-bg: var(--bg-primary);
-  --mobile-sidebar-border: var(--text-primary);
-  --mobile-sidebar-text: var(--text-primary);
-  --mobile-icon: var(--text-primary);
-  --avatar-border: var(--text-primary);
-
-  --body-bg: whitesmoke;
-  --main-bg: var(--text-primary);
-
-  --sidenav-bg: var(--text-primary);
-  --sidenav-bg-hovered: var(--bg-primary);
-  --sidenav-text: var(--bg-primary);
-  --sidenav-text-hovered: var(--text-primary);
-  --sidenav-icon-hovered: var(--fifth-color);
-
-  --sidenav-icon-lighter: var(--third-color);
-  --sidenav-icon-darker: var(--fourth-color);
-  --sidenav-icon-lighter-hovered: var(--sixth-color);
-  --sidenav-icon-darker-hovered: var(--fifth-color);
 
   --sidenav-offset: 94px;
   --sidenav-offset-mobile: 64px;
@@ -47,7 +30,73 @@ html {
 
 body {
   font-family: "Lato", sans-serif;
-  background-color: var(--body-bg);
+  background-color: whitesmoke;
+}
+
+.dark {
+  --text-primary: var(--first-color);
+  --bg-primary: var(--second-color);
+
+  --text-secondary: var(--third-color);
+  --bg-secondary: var(--fourth-color);
+
+  --text-tertiary: var(--fifth-color);
+  --bg-tertiary: var(--sixth-color);
+
+  --nav-bg: var(--bg-primary);
+
+  --mobile-sidebar-bg: var(--bg-primary);
+  --mobile-sidebar-border: var(--text-primary);
+  --mobile-sidebar-text: var(--text-primary);
+  --mobile-icon: var(--text-primary);
+  --avatar-border: var(--text-primary);
+
+  --main-bg: var(--text-primary);
+
+  --sidenav-bg: var(--text-primary);
+  --sidenav-bg-hovered: var(--bg-primary);
+  --sidenav-text: var(--bg-primary);
+  --sidenav-text-hovered: var(--text-primary);
+  --sidenav-icon: var(--bg-primary);
+  --sidenav-icon-hovered: var(--fifth-color);
+
+  --sidenav-icon-lighter: var(--text-secondary);
+  --sidenav-icon-darker: var(--bg-secondary);
+  --sidenav-icon-lighter-hovered: var(--text-tertiary);
+  --sidenav-icon-darker-hovered: var(--bg-tertiary);
+}
+
+.light {
+  --text-primary: var(--first-color);
+  --bg-primary: var(--seventh-color);
+
+  --text-secondary: var(--first-color);
+  --bg-secondary: var(--second-color);
+
+  --text-tertiary: var(--third-color);
+  --bg-tertiary: var(--fourth-color);
+
+  --nav-bg: var(--bg-primary);
+
+  --mobile-sidebar-bg: var(--bg-primary);
+  --mobile-sidebar-border: var(--text-primary);
+  --mobile-sidebar-text: var(--text-primary);
+  --mobile-icon: var(--text-primary);
+  --avatar-border: var(--text-primary);
+
+  --main-bg: var(--text-primary);
+
+  --sidenav-bg: var(--text-primary);
+  --sidenav-bg-hovered: var(--bg-primary);
+  --sidenav-text: var(--bg-primary);
+  --sidenav-text-hovered: var(--text-primary);
+  --sidenav-icon: var(--bg-primary);
+  --sidenav-icon-hovered: var(--fifth-color);
+
+  --sidenav-icon-lighter: var(--text-secondary);
+  --sidenav-icon-darker: var(--bg-secondary);
+  --sidenav-icon-lighter-hovered: var(--text-tertiary);
+  --sidenav-icon-darker-hovered: var(--bg-tertiary);
 }
 
 a {
@@ -56,4 +105,8 @@ a {
 
 a:hover {
   text-decoration: none;
+}
+
+.activeSideNavItem {
+  background-color: var(--sidenav-bg);
 }

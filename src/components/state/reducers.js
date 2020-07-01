@@ -28,10 +28,22 @@ export default function (state, action) {
 
     case "logout": {
       state.auth.token = null;
-      state.currentUser = {};
       window.localStorage.removeItem("imgur_token");
+      state.currentUser = {};
       window.localStorage.removeItem("current_user");
       return;
+    }
+
+    case "toggleTheme": {
+      if (state.ui.theme === "dark") {
+        state.ui.theme = "light";
+        window.localStorage.setItem("vernal_theme", "light");
+        return;
+      } else {
+        state.ui.theme = "dark";
+        window.localStorage.setItem("vernal_theme", "dark");
+        return;
+      }
     }
 
     default:

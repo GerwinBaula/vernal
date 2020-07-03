@@ -1,7 +1,7 @@
 import React from "react";
 import { css } from "@emotion/core";
 
-function HamburgerLabel({ onCheckedChange }) {
+function HamburgerLabel({ checked, onCheckedChange }) {
   const labelStyle = css`
     width: 30px;
     height: 4px;
@@ -34,7 +34,7 @@ function HamburgerLabel({ onCheckedChange }) {
     <label
       htmlFor="toggle-hamburger"
       className="mt-3 hamburger"
-      onMouseLeave={() => onCheckedChange(false)}
+      onMouseLeave={() => checked && onCheckedChange()}
       css={labelStyle}
     />
   );

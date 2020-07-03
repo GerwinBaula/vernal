@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import AllRoutes from "./AllRoutes";
+import AllRoutes from "../../common/Routing/AllRoutes";
 import { StateContext } from "../../state/contexts";
 import { getLoggedInStatus } from "../../state/selectors";
 

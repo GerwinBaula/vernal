@@ -1,6 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { StateContext, DispatchContext } from "../../state/contexts";
-import { getLoggedInStatus, getCurrentTheme } from "../../state/selectors";
+import {
+  getLoggedInStatus,
+  getCurrentTheme,
+  getCheckbox,
+} from "../../state/selectors";
 import SideNavbar from "./SideNavbar";
 
 function SideNavbarMenu() {
@@ -8,7 +12,16 @@ function SideNavbarMenu() {
   const dispatch = useContext(DispatchContext);
   const loggedInStatus = getLoggedInStatus(state);
   const theme = getCurrentTheme(state);
-  const [checked, setChecked] = useState(false);
+  const checkboxName = "sidenav";
+  const checked = getCheckbox(state, checkboxName);
+
+  function handleCheckedChange() {
+    dispatch({ type: "toggleCheckbox", payload: checkboxName });
+  }
+
+  function handleToggleChange() {
+    dispatch({ type: "toggleTheme" });
+  }
 
   // You can set some condition with state and mutate the items in the list
   const listItems = [
@@ -58,8 +71,8 @@ function SideNavbarMenu() {
         <SideNavbar
           listItems={listItems}
           checked={checked}
-          onCheckedChange={setChecked}
-          dispatch={dispatch}
+          onCheckedChange={handleCheckedChange}
+          onToggleChange={handleToggleChange}
         />
       )}
     </>

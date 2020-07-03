@@ -1,20 +1,51 @@
-import React, { useContext } from "react";
+import React, { useContext, useCallback } from "react";
 import MobileMenu from "./MobileMenu/MobileMenu";
-import { StateContext } from "../state/contexts";
-import { getLoggedInStatus } from "../state/selectors";
+import { StateContext, DispatchContext } from "../state/contexts";
+import { getLoggedInStatus, getQuery, getResults } from "../state/selectors";
 import { Link, useHistory } from "react-router-dom";
 import { css } from "@emotion/core";
 import config from "../../config";
 import qs from "qs";
+import SearchInput from "./SearchInput";
+import MobileSearchInput from "./MobileSearchInput";
+import httpService from "../services/httpService";
+import _ from "lodash";
 
+// Perform optimistic updates
+// When focusedOut remove the results list
+// Refactor the search inputs
 function TopNavbar() {
   const state = useContext(StateContext);
+  const dispatch = useContext(DispatchContext);
   const loggedInStatus = getLoggedInStatus(state);
+  const results = getResults(state);
+  const query = getQuery(state);
   const history = useHistory();
+
+  const debounceInReact = useCallback(
+    _.debounce(async (query) => {
+      try {
+        dispatch({ type: "apiCallBegan" });
+        const { data } = await httpService.get(
+          `https://api.imgur.com/3/gallery/search?q=${query}`
+        );
+        const { data: results } = data;
+        dispatch({ type: "getResultsSuccess", payload: results });
+      } catch (error) {
+        dispatch({ type: "apiCallFailed" });
+      }
+    }, 500),
+    []
+  );
 
   function handleSubmit(event) {
     event.preventDefault();
     console.log("submitted");
+  }
+
+  function handleInputChange({ target: input }) {
+    dispatch({ type: "query", payload: input.value });
+    debounceInReact(input.value);
   }
 
   function handleInitializeLogin() {
@@ -52,102 +83,12 @@ function TopNavbar() {
       >
         <div className="container-xl p-0">
           <div className="d-flex align-items-center justify-content-between">
-            <form
-              onSubmit={handleSubmit}
-              className="d-flex flex-fill d-sm-none position-relative"
-              css={css`
-                border: 1px solid var(--text-primary);
-                border-radius: 50px;
-              `}
-            >
-              <button
-                type="submit"
-                className="m-0 pl-2 py-2 pr-1 d-flex justify-content-center align-items-center"
-                css={css`
-                  border-radius: 50px 0 0 50px;
-                  background-color: var(--bg-primary);
-                  border: 1px solid var(--bg-primary)
-                  border-right: none;
-                  color: var(--text-primary);
-                  font-size: 20px;
-
-                  &:focus {
-                    outline: none;
-                  }
-                `}
-              >
-                <ion-icon name="search-outline"></ion-icon>
-              </button>
-              <input
-                type="text"
-                className="w-100 mr-3"
-                placeholder="Images, #tag, @user..."
-                css={css`
-                  border: none;
-                  border-radius: 0 50px 50px 0;
-                  outline: none;
-                  background-color: var(--bg-primary);
-                  color: var(--text-primary);
-
-                  &::placeholder {
-                    color: var(--text-primary);
-                  }
-                `}
-              />
-              {/* <ul
-                className="list-group position-absolute w-100"
-                css={css`
-                  top: 36px;
-                  box-shadow: 0px 0.5px 3px 0px var(--text-primary-color);
-
-                  & > * {
-                    background-color: var(--bg-primary);
-                    color: var(--text-primary);
-                  }
-                `}
-              >
-                <li
-                  className="list-group-item py-2 px-3"
-                  css={css`
-                    border-color: var(--text-primary);
-                  `}
-                >
-                  Cras justo odio
-                </li>
-                <li
-                  className="list-group-item py-2 px-3"
-                  css={css`
-                    border-color: var(--text-primary);
-                  `}
-                >
-                  Dapibus ac facilisis in
-                </li>
-                <li
-                  className="list-group-item py-2 px-3"
-                  css={css`
-                    border-color: var(--text-primary);
-                  `}
-                >
-                  Morbi leo risus
-                </li>
-                <li
-                  className="list-group-item py-2 px-3"
-                  css={css`
-                    border-color: var(--text-primary);
-                  `}
-                >
-                  Porta ac consectetur ac
-                </li>
-                <li
-                  className="list-group-item py-2 px-3"
-                  css={css`
-                    border-color: var(--text-primary);
-                  `}
-                >
-                  Vestibulum at eros
-                </li>
-              </ul> */}
-            </form>
+            <MobileSearchInput
+              query={query}
+              results={results}
+              onInputChange={handleInputChange}
+              onSearch={handleSubmit}
+            />
             <a
               href="/"
               className={
@@ -194,104 +135,12 @@ function TopNavbar() {
                   width: `${!loggedInStatus ? "60%" : "75%"}`,
                 }}
               >
-                <form onSubmit={handleSubmit} className="row position-relative">
-                  <div className="col px-0">
-                    <input
-                      type="text"
-                      className="w-100 py-2 pl-4"
-                      placeholder="Images, #tag, @user..."
-                      css={css`
-                        border-radius: 50px 0 0 50px;
-                        border: 1px solid var(--text-primary);
-                        border-right: none;
-                        outline: none;
-                        background-color: var(--bg-primary);
-                        color: var(--text-primary);
-
-                        &::placeholder {
-                          color: var(--text-primary);
-                        }
-                      `}
-                    />
-                  </div>
-                  <div className="px-0 d-flex justify-content-center align-items-center">
-                    <button
-                      type="submit"
-                      className="h-100 d-flex align-items-center pr-3"
-                      css={css`
-                        border-radius: 0 50px 50px 0;
-                        border: 1px solid var(--text-primary);
-                        background-color: var(--bg-primary);
-                        border-left: none;
-                        color: var(--text-primary);
-                        font-size: 18px;
-
-                        &:focus {
-                          outline: none;
-                        }
-
-                        &:hover {
-                          color: var(--text-primary);
-                        }
-                      `}
-                    >
-                      <ion-icon name="search-outline"></ion-icon>
-                    </button>
-                  </div>
-                  {/* <ul
-                    className="list-group position-absolute w-100"
-                    css={css`
-                      top: 38px;
-                      box-shadow: 0px 0.5px 3px 0px var(--text-primary-color);
-
-                      & > * {
-                        background-color: var(--bg-primary);
-                        color: var(--text-primary);
-                      }
-                    `}
-                  >
-                    <li
-                      className="list-group-item py-2 px-3"
-                      css={css`
-                        border-color: var(--text-primary);
-                      `}
-                    >
-                      Cras justo odio
-                    </li>
-                    <li
-                      className="list-group-item py-2 px-3"
-                      css={css`
-                        border-color: var(--text-primary);
-                      `}
-                    >
-                      Dapibus ac facilisis in
-                    </li>
-                    <li
-                      className="list-group-item py-2 px-3"
-                      css={css`
-                        border-color: var(--text-primary);
-                      `}
-                    >
-                      Morbi leo risus
-                    </li>
-                    <li
-                      className="list-group-item py-2 px-3"
-                      css={css`
-                        border-color: var(--text-primary);
-                      `}
-                    >
-                      Porta ac consectetur ac
-                    </li>
-                    <li
-                      className="list-group-item py-2 px-3"
-                      css={css`
-                        border-color: var(--text-primary);
-                      `}
-                    >
-                      Vestibulum at eros
-                    </li>
-                  </ul> */}
-                </form>
+                <SearchInput
+                  query={query}
+                  results={results}
+                  onInputChange={handleInputChange}
+                  onSearch={handleSubmit}
+                />
               </div>
             </div>
             <div className="d-none d-sm-inline-flex">

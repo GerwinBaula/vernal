@@ -14,8 +14,15 @@ export default function (state, action) {
 
     case "getUserSuccess": {
       const user = action.payload;
-      state.currentUser = user;
+      state.auth.user = user;
       window.localStorage.setItem("current_user", JSON.stringify(user));
+      return;
+    }
+
+    case "getResultsSuccess": {
+      const results = action.payload;
+      const slicedResults = results.slice(0, 5);
+      state.entities.results = slicedResults;
       return;
     }
 
@@ -44,6 +51,23 @@ export default function (state, action) {
         window.localStorage.setItem("vernal_theme", "dark");
         return;
       }
+    }
+
+    case "toggleCheckbox": {
+      const name = action.payload;
+
+      if (!state.ui.checkboxes[name]) {
+        state.ui.checkboxes[name] = true;
+        return;
+      } else {
+        state.ui.checkboxes[name] = false;
+        return;
+      }
+    }
+
+    case "query": {
+      state.ui.query = action.payload;
+      return;
     }
 
     default:

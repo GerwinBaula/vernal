@@ -19,6 +19,7 @@ function LoginHandler({ location: { hash } }) {
         );
         dispatch({ type: "getUserSuccess", payload: userData });
       } catch (error) {
+        // u can pass the error.message in the payload
         dispatch({ type: "apiCallFailed" });
       }
     }

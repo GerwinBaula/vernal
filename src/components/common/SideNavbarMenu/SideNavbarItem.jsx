@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-function SideNavbarItem({ item, onCheckedChange, dispatch }) {
+function SideNavbarItem({ checked, item, onCheckedChange, onToggleChange }) {
   const { pathname } = useLocation();
 
   function getItemStyle(isLastItem) {
@@ -76,8 +76,8 @@ function SideNavbarItem({ item, onCheckedChange, dispatch }) {
   };
 
   function getClickFunction(isLastItem) {
-    if (isLastItem) dispatch({ type: "toggleTheme" });
-    onCheckedChange(false);
+    if (isLastItem) onToggleChange();
+    checked && onCheckedChange();
   }
 
   return (

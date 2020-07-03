@@ -3,19 +3,13 @@ import { css } from "@emotion/core";
 import HamburgerInfo from "./HamburgerInfo";
 import HamburgerList from "./HamburgerList";
 
-function HamburgerMenu({ username, bio, avatar }) {
-  const firstSetOfLinks = [
-    { route: "/posts", icon: "reader", text: "Posts" },
-    { route: "/comments", icon: "chatbubble-ellipses", text: "Comments" },
-    { route: "/profile", icon: "person", text: "Profile" },
-  ];
-
-  const secondSetOfLinks = [
-    { route: "/new-post", icon: "add-circle", text: "New Post" },
-    { route: "/settings", icon: "settings", text: "Settings" },
-    { route: "/logout", icon: "log-out", text: "Logout" },
-  ];
-
+function HamburgerMenu({
+  username,
+  bio,
+  avatar,
+  firstSetOfLinks,
+  secondSetOfLinks,
+}) {
   const hamburgerMenuStyle = css`
     top: 40px;
     left: 100px;

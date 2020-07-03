@@ -2,14 +2,15 @@ import React from "react";
 import SideNavbarLabel from "./SideNavbarLabel";
 import SideNavbarCheckbox from "./SideNavbarCheckbox";
 
-function SideNavbar({ listItems, checked, onCheckedChange, dispatch }) {
+function SideNavbar({ listItems, checked, onCheckedChange, onToggleChange }) {
   return (
     <nav>
       <SideNavbarCheckbox checked={checked} onCheckedChange={onCheckedChange} />
       <SideNavbarLabel
+        checked={checked}
         listItems={listItems}
         onCheckedChange={onCheckedChange}
-        dispatch={dispatch}
+        onToggleChange={onToggleChange}
       />
     </nav>
   );

@@ -2,7 +2,12 @@ import React from "react";
 import { css } from "@emotion/core";
 import SideNavbarList from "./SideNavbarList";
 
-function SideNavbarLabel({ listItems, onCheckedChange, dispatch }) {
+function SideNavbarLabel({
+  checked,
+  listItems,
+  onCheckedChange,
+  onToggleChange,
+}) {
   const labelStyle = css`
     position: fixed;
     width: var(--sidenav-offset-hovered);
@@ -33,13 +38,14 @@ function SideNavbarLabel({ listItems, onCheckedChange, dispatch }) {
     <label
       htmlFor="toggle-sidenav"
       className="overflow-hidden m-0"
-      onMouseLeave={() => onCheckedChange(false)}
+      onMouseLeave={() => checked && onCheckedChange()}
       css={labelStyle}
     >
       <SideNavbarList
+        checked={checked}
         listItems={listItems}
         onCheckedChange={onCheckedChange}
-        dispatch={dispatch}
+        onToggleChange={onToggleChange}
       />
     </label>
   );

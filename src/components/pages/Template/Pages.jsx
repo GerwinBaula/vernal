@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { StateContext } from "../../state/contexts";
 import { getCurrentTheme } from "../../state/selectors";
-import SideNavbarMenu from "../SideNavbarMenu/SideNavbarMenu";
+import SideNavbarMenu from "../../common/SideNavbarMenu/SideNavbarMenu";
 import PagesContent from "./PagesContent";
-import TopNavbar from "../TopNavbar";
+import TopNavbar from "../../common/TopNavbar";
 
 function Pages() {
   const state = useContext(StateContext);

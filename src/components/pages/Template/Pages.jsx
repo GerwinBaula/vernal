@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { StateContext } from "../../state/contexts";
-import { getCurrentTheme } from "../../state/selectors";
+import stateSelectors from "../../state/selectors";
 import SideNavbarMenu from "../../common/SideNavbarMenu/SideNavbarMenu";
 import PagesContent from "./PagesContent";
 import TopNavbar from "../../common/TopNavbar";
 
 function Pages() {
   const state = useContext(StateContext);
-  const theme = getCurrentTheme(state);
+  const theme = stateSelectors.getCurrentTheme(state);
 
   return (
     <div className={theme}>

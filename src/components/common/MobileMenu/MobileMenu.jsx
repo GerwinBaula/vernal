@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import { StateContext, DispatchContext } from "../../state/contexts";
-import { getCurrentUser, getCheckbox } from "../../state/selectors";
+import stateSelectors from "../../state/selectors";
 import HamburgerMenu from "./HamburgerMenu";
 import Hamburger from "./Hamburger";
 
 function MobileMenu() {
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext);
-  const user = getCurrentUser(state);
+  const user = stateSelectors.getCurrentUser(state);
   const checkboxName = "mobile";
-  const checked = getCheckbox(state, checkboxName);
+  const checked = stateSelectors.getCheckbox(state, checkboxName);
 
   function handleCheckedChange() {
     dispatch({ type: "toggleCheckbox", payload: checkboxName });

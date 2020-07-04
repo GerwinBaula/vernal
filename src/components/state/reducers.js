@@ -56,17 +56,17 @@ export default function (state, action) {
     case "toggleCheckbox": {
       const name = action.payload;
 
-      if (!state.ui.checkboxes[name]) {
-        state.ui.checkboxes[name] = true;
-        return;
-      } else {
-        state.ui.checkboxes[name] = false;
-        return;
-      }
+      state.ui.checkboxes[name] = !state.ui.checkboxes[name];
+      return;
     }
 
     case "query": {
-      state.ui.query = action.payload;
+      state.ui.searchInput.query = action.payload;
+      return;
+    }
+
+    case "toggleFocused": {
+      state.ui.searchInput.isFocused = !state.ui.searchInput.isFocused;
       return;
     }
 

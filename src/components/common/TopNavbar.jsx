@@ -1,51 +1,63 @@
 import React, { useContext, useCallback } from "react";
-import MobileMenu from "./MobileMenu/MobileMenu";
 import { StateContext, DispatchContext } from "../state/contexts";
-import { getLoggedInStatus, getQuery, getResults } from "../state/selectors";
-import { Link, useHistory } from "react-router-dom";
-import { css } from "@emotion/core";
+import stateSelectors from "../state/selectors";
+import { useHistory } from "react-router-dom";
 import config from "../../config";
 import qs from "qs";
-import SearchInput from "./SearchInput";
 import MobileSearchInput from "./MobileSearchInput";
 import httpService from "../services/httpService";
 import _ from "lodash";
+import Name from "./Name";
+import MobileButtons from "./MobileButtons";
+import DesktopSearchInput from "./DesktopSearchInput";
+import DesktopButtons from "./DesktopButtons";
+import BehindTopNavbar from "./BehindTopNavbar";
 
-// Perform optimistic updates
-// When focusedOut remove the results list
 // Refactor the search inputs
 function TopNavbar() {
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext);
-  const loggedInStatus = getLoggedInStatus(state);
-  const results = getResults(state);
-  const query = getQuery(state);
+  const loggedInStatus = stateSelectors.getLoggedInStatus(state);
+  const results = stateSelectors.getResults(state);
+  const query = stateSelectors.getQuery(state);
+  const isFocused = stateSelectors.getSearchInputState(state);
   const history = useHistory();
 
-  const debounceInReact = useCallback(
+  const performDebounce = useCallback(
     _.debounce(async (query) => {
       try {
         dispatch({ type: "apiCallBegan" });
+
         const { data } = await httpService.get(
           `https://api.imgur.com/3/gallery/search?q=${query}`
         );
         const { data: results } = data;
-        dispatch({ type: "getResultsSuccess", payload: results });
+
+        if (!query) return dispatch({ type: "getResultsSuccess", payload: [] });
+        return dispatch({ type: "getResultsSuccess", payload: results });
       } catch (error) {
         dispatch({ type: "apiCallFailed" });
       }
-    }, 500),
+    }, 300),
     []
   );
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log("submitted");
+    // Idk this pa pero yeah we can do this better
+    history.push(`/results?query=${query}`);
+
+    dispatch({ type: "apiCallBegan" });
+    dispatch({ type: "getResultsSuccess", payload: [] });
   }
 
   function handleInputChange({ target: input }) {
     dispatch({ type: "query", payload: input.value });
-    debounceInReact(input.value);
+    performDebounce(input.value);
+  }
+
+  function handleFocusChange() {
+    dispatch({ type: "toggleFocused" });
   }
 
   function handleInitializeLogin() {
@@ -81,120 +93,37 @@ function TopNavbar() {
           },
         }}
       >
-        <div className="container-xl p-0">
-          <div className="d-flex align-items-center justify-content-between">
-            <MobileSearchInput
-              query={query}
-              results={results}
-              onInputChange={handleInputChange}
-              onSearch={handleSubmit}
-            />
-            <a
-              href="/"
-              className={
-                !loggedInStatus
-                  ? "pl-0 mx-4 mx-lg-3 mx-xl-2"
-                  : "mx-4 mx-sm-5 px-0 px-xl-4 d-block d-sm-none d-xl-block"
-              }
-            >
-              <h3
-                className={!loggedInStatus ? "mb-0" : "mb-0 ml-2"}
-                css={css`
-                  color: var(--text-primary);
-                `}
-              >
-                Vernal
-              </h3>
-            </a>
-            {/* Mobile phones */}
-            {loggedInStatus ? (
-              <MobileMenu />
-            ) : (
-              <span
-                onClick={() => handleInitializeLogin()}
-                className="py-2 px-4 d-block d-block d-sm-none"
-                css={css`
-                  border: 1px solid var(--text-primary);
-                  border-radius: 50px;
-                  color: var(--text-primary);
-                  background-color: var(--bg-primary);
-
-                  &:hover {
-                    background-color: var(--text-primary);
-                    color: var(--bg-primary);
-                  }
-                `}
-              >
-                Login
-              </span>
-            )}
-            {/* Desktop to tablet */}
-            <div className="flex-fill mx-2 mx-lg-4 px-0 px-lg-2 d-none d-sm-flex justify-content-center">
-              <div
-                css={{
-                  width: `${!loggedInStatus ? "60%" : "75%"}`,
-                }}
-              >
-                <SearchInput
-                  query={query}
-                  results={results}
-                  onInputChange={handleInputChange}
-                  onSearch={handleSubmit}
-                />
-              </div>
-            </div>
-            <div className="d-none d-sm-inline-flex">
-              {loggedInStatus && (
-                <Link
-                  to="/new-post"
-                  className="mr-2 py-2 px-3"
-                  css={css`
-                    color: var(--text-primary);
-                    transition: var(--transition-speed);
-
-                    &:hover {
-                      background-color: var(--text-primary);
-                      color: var(--bg-primary);
-                    }
-                  `}
-                >
-                  + New Post
-                </Link>
-              )}
-              <span
-                href="#"
-                onClick={() =>
-                  !loggedInStatus ? handleInitializeLogin() : handleLogout()
-                }
-                className="ml-2 py-2 px-4"
-                css={css`
-                  border: 1px solid var(--text-primary);
-                  border-radius: 50px;
-                  color: var(--text-primary);
-                  background-color: var(--bg-primary);
-                  cursor: pointer;
-
-                  &:hover {
-                    background-color: var(--text-primary);
-                    color: var(--bg-primary);
-                  }
-                `}
-              >
-                {!loggedInStatus ? "Login" : "Logout"}
-              </span>
-            </div>
-          </div>
+        <div className="container-xl p-0 d-flex align-items-center justify-content-between">
+          <MobileSearchInput
+            query={query}
+            results={results}
+            onInputChange={handleInputChange}
+            onSearch={handleSubmit}
+            isFocused={isFocused}
+            onFocusChange={handleFocusChange}
+          />
+          <Name loggedInStatus={loggedInStatus} />
+          <MobileButtons
+            loggedInStatus={loggedInStatus}
+            onLogin={handleInitializeLogin}
+          />
+          <DesktopSearchInput
+            loggedInStatus={loggedInStatus}
+            query={query}
+            results={results}
+            onInputChange={handleInputChange}
+            onSearch={handleSubmit}
+            isFocused={isFocused}
+            onFocusChange={handleFocusChange}
+          />
+          <DesktopButtons
+            loggedInStatus={loggedInStatus}
+            onLogin={handleInitializeLogin}
+            onLogout={handleLogout}
+          />
         </div>
       </nav>
-      <div
-        css={css`
-          height: 65px;
-
-          @media (max-width: 575px) {
-            height: 64px;
-          }
-        `}
-      ></div>
+      <BehindTopNavbar />
     </>
   );
 }

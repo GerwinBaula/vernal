@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import AllRoutes from "../../common/Routing/AllRoutes";
 import { StateContext } from "../../state/contexts";
-import { getLoggedInStatus } from "../../state/selectors";
+import stateSelectors from "../../state/selectors";
 
 function PagesContent() {
   const state = useContext(StateContext);
-  const loggedInStatus = getLoggedInStatus(state);
+  const loggedInStatus = stateSelectors.getLoggedInStatus(state);
 
   const mainStyle = {
     marginLeft: `${!loggedInStatus ? "0px" : "var(--sidenav-offset-hovered)"}`,

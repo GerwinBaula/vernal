@@ -12,7 +12,10 @@ export default {
       mobile: false,
       sidenav: false,
     },
-    query: "",
+    searchInput: {
+      query: "",
+      isFocused: false,
+    },
   },
   apiCallsInProgress: 0,
 };

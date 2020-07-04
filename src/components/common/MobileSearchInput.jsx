@@ -1,11 +1,22 @@
 import React from "react";
 import { css } from "@emotion/core";
+import { useHistory } from "react-router-dom";
 
-function MobileSearchInput({ query, results, onInputChange, onSearch }) {
+function MobileSearchInput({
+  query,
+  results,
+  onInputChange,
+  isFocused,
+  onFocusChange,
+  onSearch,
+}) {
+  const history = useHistory();
+
   const formStyle = css`
     border: 1px solid var(--text-primary);
     border-radius: 50px;
   `;
+
   const inputStyle = css`
     border: none;
     border-radius: 0 50px 50px 0;
@@ -34,6 +45,7 @@ function MobileSearchInput({ query, results, onInputChange, onSearch }) {
   const listStyle = css`
     top: 36px;
     box-shadow: 0px 0.5px 3px 0px var(--text-primary-color);
+    cursor: pointer;
 
     & > * {
       background-color: var(--bg-primary);
@@ -64,12 +76,15 @@ function MobileSearchInput({ query, results, onInputChange, onSearch }) {
         placeholder="Search some images... or memes."
         value={query}
         onChange={onInputChange}
+        onFocus={onFocusChange}
+        onBlur={onFocusChange}
         css={inputStyle}
       />
-      {!results.length || (
+      {!results.length || !isFocused || (
         <ul className="list-group position-absolute w-100" css={listStyle}>
           {results.map((result) => (
             <li
+              onMouseDown={() => history.push(`/image/${result.id}`)}
               key={result.datetime}
               className="list-group-item py-2 px-3"
               css={itemStyle}

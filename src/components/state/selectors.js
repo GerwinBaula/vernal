@@ -1,6 +1,9 @@
-export const getLoggedInStatus = (state) => !!state.auth.token;
-export const getCurrentUser = (state) => state.auth.user;
-export const getCurrentTheme = (state) => state.ui.theme;
-export const getCheckbox = (state, name) => state.ui.checkboxes[name];
-export const getQuery = (state) => state.ui.query;
-export const getResults = (state) => state.entities.results;
+export default {
+  getLoggedInStatus: (state) => !!state.auth.token,
+  getCurrentUser: (state) => state.auth.user,
+  getCurrentTheme: (state) => state.ui.theme,
+  getCheckbox: (state, name) => state.ui.checkboxes[name],
+  getQuery: (state) => state.ui.searchInput.query,
+  getSearchInputState: (state) => state.ui.searchInput.isFocused,
+  getResults: (state) => state.entities.results,
+};

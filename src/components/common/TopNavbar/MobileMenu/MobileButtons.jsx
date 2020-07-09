@@ -1,5 +1,5 @@
 import React from "react";
-import MobileMenu from "./MobileMenu/MobileMenu";
+import MobileMenu from "./MobileMenu";
 import MobileAuthButton from "./MobileAuthButton";
 
 function MobileButtons({ loggedInStatus, onLogin }) {

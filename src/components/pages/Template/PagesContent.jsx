@@ -21,7 +21,7 @@ function PagesContent() {
   };
 
   return (
-    <main className="flex-fill" css={mainStyle}>
+    <main css={mainStyle}>
       <AllRoutes />
     </main>
   );

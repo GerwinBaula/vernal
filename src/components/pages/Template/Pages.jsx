@@ -3,7 +3,7 @@ import { StateContext } from "../../state/contexts";
 import stateSelectors from "../../state/selectors";
 import SideNavbarMenu from "../../common/SideNavbarMenu/SideNavbarMenu";
 import PagesContent from "./PagesContent";
-import TopNavbar from "../../common/TopNavbar";
+import TopNavbar from "../../common/TopNavbar/TopNavbar";
 
 function Pages() {
   const state = useContext(StateContext);
@@ -12,7 +12,7 @@ function Pages() {
   return (
     <div className={theme}>
       <TopNavbar />
-      <div className="container-xl p-0 d-flex">
+      <div className="container-xl p-0">
         <SideNavbarMenu />
         <PagesContent />
       </div>

@@ -28,11 +28,6 @@ html {
   font-size: 14px;
 }
 
-body {
-  font-family: "Lato", sans-serif;
-  background-color: whitesmoke;
-}
-
 .dark {
   --text-primary: var(--first-color);
   --bg-primary: var(--second-color);
@@ -99,6 +94,10 @@ body {
   --sidenav-icon-darker-hovered: var(--bg-tertiary);
 }
 
+body {
+  font-family: "Lato", sans-serif;
+}
+
 a {
   text-decoration: none;
 }
@@ -108,5 +107,5 @@ a:hover {
 }
 
 .activeSideNavItem {
-  background-color: var(--sidenav-bg);
+  /* background-color: var(--sidenav-bg); */
 }

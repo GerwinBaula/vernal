@@ -1,7 +1,7 @@
 import React from "react";
 import { css } from "@emotion/core";
 
-function BehindTopNavbar() {
+function BehindTopNavbarContainer() {
   return (
     <div
       css={css`
@@ -15,4 +15,4 @@ function BehindTopNavbar() {
   );
 }
 
-export default BehindTopNavbar;
+export default BehindTopNavbarContainer;

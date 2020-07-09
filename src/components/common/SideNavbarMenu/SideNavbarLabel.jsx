@@ -39,6 +39,7 @@ function SideNavbarLabel({
       htmlFor="toggle-sidenav"
       className="overflow-hidden m-0"
       onMouseLeave={() => checked && onCheckedChange()}
+      onMouseEnter={() => !checked && onCheckedChange()}
       css={labelStyle}
     >
       <SideNavbarList

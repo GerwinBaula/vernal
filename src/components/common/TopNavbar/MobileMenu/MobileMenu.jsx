@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { StateContext, DispatchContext } from "../../state/contexts";
-import stateSelectors from "../../state/selectors";
+import { StateContext, DispatchContext } from "../../../state/contexts";
+import stateSelectors from "../../../state/selectors";
 import HamburgerMenu from "./HamburgerMenu";
 import Hamburger from "./Hamburger";
 

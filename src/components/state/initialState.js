@@ -1,6 +1,10 @@
 export default {
   entities: {
     results: [],
+    tags: {
+      list: [],
+      lastFetch: null,
+    },
   },
   auth: {
     token: window.localStorage.getItem("imgur_token"),
@@ -12,9 +16,16 @@ export default {
       mobile: false,
       sidenav: false,
     },
-    searchInput: {
-      query: "",
-      isFocused: false,
+    inputs: {
+      search: {
+        query: "",
+        isFocused: false,
+      },
+    },
+    scrollbars: {
+      tagsSlider: {
+        offsetLeft: 0,
+      },
     },
   },
   apiCallsInProgress: 0,

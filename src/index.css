@@ -1,5 +1,8 @@
 :root {
   /* Dark Theme */
+  --white: #fff;
+  --black: #000;
+
   --first-color: #bdbcbc;
   --second-color: #505050;
 
@@ -37,28 +40,6 @@ html {
 
   --text-tertiary: var(--fifth-color);
   --bg-tertiary: var(--sixth-color);
-
-  --nav-bg: var(--bg-primary);
-
-  --mobile-sidebar-bg: var(--bg-primary);
-  --mobile-sidebar-border: var(--text-primary);
-  --mobile-sidebar-text: var(--text-primary);
-  --mobile-icon: var(--text-primary);
-  --avatar-border: var(--text-primary);
-
-  --main-bg: var(--text-primary);
-
-  --sidenav-bg: var(--text-primary);
-  --sidenav-bg-hovered: var(--bg-primary);
-  --sidenav-text: var(--bg-primary);
-  --sidenav-text-hovered: var(--text-primary);
-  --sidenav-icon: var(--bg-primary);
-  --sidenav-icon-hovered: var(--fifth-color);
-
-  --sidenav-icon-lighter: var(--text-secondary);
-  --sidenav-icon-darker: var(--bg-secondary);
-  --sidenav-icon-lighter-hovered: var(--text-tertiary);
-  --sidenav-icon-darker-hovered: var(--bg-tertiary);
 }
 
 .light {
@@ -70,28 +51,6 @@ html {
 
   --text-tertiary: var(--third-color);
   --bg-tertiary: var(--fourth-color);
-
-  --nav-bg: var(--bg-primary);
-
-  --mobile-sidebar-bg: var(--bg-primary);
-  --mobile-sidebar-border: var(--text-primary);
-  --mobile-sidebar-text: var(--text-primary);
-  --mobile-icon: var(--text-primary);
-  --avatar-border: var(--text-primary);
-
-  --main-bg: var(--text-primary);
-
-  --sidenav-bg: var(--text-primary);
-  --sidenav-bg-hovered: var(--bg-primary);
-  --sidenav-text: var(--bg-primary);
-  --sidenav-text-hovered: var(--text-primary);
-  --sidenav-icon: var(--bg-primary);
-  --sidenav-icon-hovered: var(--fifth-color);
-
-  --sidenav-icon-lighter: var(--text-secondary);
-  --sidenav-icon-darker: var(--bg-secondary);
-  --sidenav-icon-lighter-hovered: var(--text-tertiary);
-  --sidenav-icon-darker-hovered: var(--bg-tertiary);
 }
 
 body {

@@ -4,17 +4,17 @@ import { Link } from "react-router-dom";
 
 function HamburgerList({ links }) {
   const containerBorder = css`
-    border-top: 1px solid var(--mobile-sidebar-border);
+    border-top: 1px solid var(--text-primary);
   `;
   const linkStyle = css`
     ion-icon {
       margin-left: 8px;
       font-size: 26px;
-      color: var(--mobile-icon);
+      color: var(--text-primary);
     }
   `;
   const linkTextStyle = css`
-    color: var(--mobile-sidebar-text);
+    color: var(--text-primary);
   `;
 
   return (

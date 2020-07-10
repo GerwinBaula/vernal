@@ -13,7 +13,7 @@ function SideNavbarLabel({
     width: var(--sidenav-offset-hovered);
     height: calc(100vh - 65px);
 
-    background-color: var(--sidenav-bg);
+    background-color: var(--text-primary);
     z-index: 99;
     transition: var(--transition-speed);
 

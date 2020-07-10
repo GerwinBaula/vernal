@@ -44,7 +44,7 @@ function SearchInput({
 
   const listStyle = css`
     top: 38px;
-    box-shadow: 0px 0.5px 3px 0px var(--text-primary-color);
+    box-shadow: 0px 0.5px 3px 0px var(--text-primary);
     cursor: pointer;
 
     & > * {

@@ -5,13 +5,13 @@ function SideNavbarTitle({ item }) {
   const containerStyle = css`
     height: 66px;
     padding: 0 16px;
-    color: var(--sidenav-text);
-    background-color: var(--sidenav-bg);
+    color: var(--bg-primary);
+    background-color: var(--text-primary);
     transition: var(--transition-speed);
 
     &:hover {
-      background-color: var(--sidenav-bg);
-      color: var(--sidenav-text);
+      background-color: var(--text-primary);
+      color: var(--bg-primary);
     }
 
     @media (max-width: 575px) {
@@ -23,13 +23,13 @@ function SideNavbarTitle({ item }) {
 
       ion-icon:first-of-type {
         font-size: 30px;
-        color: var(--sidenav-icon-lighter);
+        color: var(--text-secondary);
         transform: translateX(10px);
       }
 
       ion-icon:last-child {
         font-size: 30px;
-        color: var(--sidenav-icon-darker);
+        color: var(--bg-secondary);
         transform: translateX(-10px);
       }
 
@@ -41,7 +41,7 @@ function SideNavbarTitle({ item }) {
 
   const titleStyle = css`
     font-size: 20px;
-    color: var(--sidenav-text);
+    color: var(--bg-primary);
     opacity: 0;
   `;
 

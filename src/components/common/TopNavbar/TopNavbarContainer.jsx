@@ -13,8 +13,8 @@ function TopNavbarContainer({
   onLogout,
 }) {
   const topNavbarStyle = {
-    backgroundColor: "var(--nav-bg)",
-    borderBottom: "var(--nav-bg)",
+    backgroundColor: "var(--bg-primary)",
+    borderBottom: "var(--bg-primary)",
     zIndex: "99",
     "@media (max-width: 1200px)": {
       marginLeft: `${!loggedInStatus ? "0px" : "94px"}`,

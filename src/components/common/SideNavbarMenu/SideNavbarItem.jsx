@@ -6,19 +6,19 @@ function SideNavbarItem({ checked, item, onCheckedChange, onToggleChange }) {
 
   const itemStyle = {
     height: "66px",
-    color: "var(--sidenav-text)",
+    color: "var(--bg-primary)",
     transition: "var(--transition-speed)",
 
     "&:hover": {
-      backgroundColor: "var(--sidenav-bg-hovered)",
+      backgroundColor: "var(--bg-primary)",
     },
 
     "&:hover ion-icon": {
-      color: "var(--sidenav-icon-hovered)",
+      color: "var(--fifth-color)",
     },
 
     "&:hover span": {
-      color: "var(--sidenav-text-hovered)",
+      color: "var(--text-primary)",
     },
 
     "@media (max-width: 575px)": {
@@ -31,9 +31,7 @@ function SideNavbarItem({ checked, item, onCheckedChange, onToggleChange }) {
       fontSize: "30px",
       transition: "var(--transition-speed)",
       color: `${
-        item.route === pathname
-          ? "var(--sidenav-icon-hovered)"
-          : "var(--sidenav-text)"
+        item.route === pathname ? "var(--fifth-color)" : "var(--bg-primary)"
       }`,
 
       "@media (max-width: 1200px)": {
@@ -49,17 +47,15 @@ function SideNavbarItem({ checked, item, onCheckedChange, onToggleChange }) {
 
   const textStyle = {
     fontSize: "18px",
-    color: "var(--sidenav-text)",
+    color: "var(--bg-primary)",
 
     "@media (max-width: 1200px)": {
       color: `${
-        item.route === pathname
-          ? "var(--sidenav-text-hovered)"
-          : "var(--sidenav-text)"
+        item.route === pathname ? "var(--text-primary)" : "var(--bg-primary)"
       }`,
 
       "&:hover": {
-        color: "var(--sidenav-text)",
+        color: "var(--bg-primary)",
       },
     },
   };

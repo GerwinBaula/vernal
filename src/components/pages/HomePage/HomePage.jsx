@@ -1,15 +1,32 @@
-import React, { useRef, useContext, useEffect } from "react";
+import React, { useRef, useContext, useEffect, useCallback } from "react";
 import { css } from "@emotion/core";
-import { StateContext } from "../../state/contexts";
+import { StateContext, DispatchContext } from "../../state/contexts";
 import selectors from "../../state/selectors";
+import httpService from "../../services/httpService";
+import _ from "lodash";
 
+// Add Caching
 function HomePage() {
   const state = useContext(StateContext);
+  const dispatch = useContext(DispatchContext);
+
   const loggedInStatus = selectors.getLoggedInStatus(state);
+  const tagsSliderOffsetLeft = selectors.getTagsSliderOffsetLeft(state);
+  const tags = selectors.getTags(state);
+
   const slider = useRef();
+
   let isDown;
   let startX;
   let scrollLeft;
+  let walk;
+
+  const debounceSliderMove = useCallback(
+    _.debounce((offsetLeft) => {
+      dispatch({ type: "tagsSliderOffsetLeft", payload: offsetLeft });
+    }, 50),
+    []
+  );
 
   function handleSliderDown(e) {
     isDown = true;
@@ -17,42 +34,52 @@ function HomePage() {
     scrollLeft = slider.current.scrollLeft;
   }
 
-  function handleSliderUp() {
-    isDown = false;
-  }
-
-  function handleSliderLeave() {
-    isDown = false;
-  }
-
   function handleSliderMove(e) {
     if (!isDown) return;
     e.preventDefault();
-    const speed = 1.2;
+    const speed = 1.4;
     const x = e.pageX - slider.current.offsetLeft;
     const walk = (x - startX) * speed;
     slider.current.scrollLeft = scrollLeft - walk;
+    debounceSliderMove(scrollLeft - walk);
   }
 
   function handleMobileSliderDown(e) {
     isDown = true;
     startX = e.changedTouches[0].pageX - slider.current.offsetLeft;
-    scrollLeft = slider.current.scrollLeft;
-  }
-
-  function handleMobileSliderUp() {
-    isDown = false;
   }
 
   function handleMobileSliderMove(e) {
     if (!isDown) return;
-    const speed = 1.2;
+    const speed = 1.4;
     const x = e.changedTouches[0].pageX - slider.current.offsetLeft;
-    const walk = (x - startX) * speed;
+    walk = (x - startX) * speed;
     slider.current.scrollLeft = scrollLeft - walk;
+    debounceSliderMove(scrollLeft - walk);
   }
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    slider.current.scrollLeft = tagsSliderOffsetLeft;
+  }, [tagsSliderOffsetLeft]);
+
+  useEffect(() => {
+    async function loadTags() {
+      try {
+        // Condition for caching
+        dispatch({ type: "apiCallBegan" });
+
+        const { data } = await httpService.get(`https://api.imgur.com/3/tags`);
+        const { data: anotherData } = data;
+        const { tags } = anotherData;
+
+        return dispatch({ type: "getTagsSuccess", payload: tags });
+      } catch (error) {
+        dispatch({ type: "apiCallFailed" });
+      }
+    }
+
+    loadTags();
+  }, [dispatch]);
 
   return (
     <div
@@ -78,195 +105,71 @@ function HomePage() {
         className="list-unstyled m-0 pr-3 pr-xl-0"
         ref={slider}
         onMouseDown={handleSliderDown}
-        onMouseUp={handleSliderUp}
-        onMouseLeave={handleSliderLeave}
+        onMouseUp={() => (isDown = false)}
+        onMouseLeave={() => (isDown = false)}
         onMouseMove={handleSliderMove}
         onTouchStart={handleMobileSliderDown}
-        onTouchEnd={handleMobileSliderUp}
+        onTouchEnd={() => (isDown = false)}
         onTouchMove={handleMobileSliderMove}
         css={css`
           white-space: nowrap;
-          height: 130px;
+          height: 140px;
           overflow: hidden;
           cursor: grabbing;
 
           li:nth-of-type(4n + 1) {
             background: var(--text-primary);
+            color: var(--white);
           }
 
           li:nth-of-type(4n + 2) {
             background: var(--text-secondary);
+            color: var(--white);
           }
 
           li:nth-of-type(4n + 3) {
             background: var(--bg-primary);
+            color: var(--white);
           }
 
           li:nth-of-type(4n + 4) {
             background: var(--bg-secondary);
+            color: var(--white);
           }
         `}
       >
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex mr-3"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
-        <li
-          className="d-inline-flex"
-          css={css`
-            height: 100%;
-            width: 130px;
-            white-space: normal;
-          `}
-        ></li>
+        {tags.list.map((tag) => (
+          <li
+            className="d-inline-flex flex-column justify-content-start align-items-center mr-3 position-relative"
+            css={css`
+              height: 100%;
+              width: 140px;
+              white-space: normal;
+              border-radius: 1px;
+            `}
+          >
+            <div
+              className="text-center mt-4 pt-1"
+              css={css`
+                min-height: 60px;
+                max-width: 100px;
+                font-size: 20px;
+                word-wrap: break-word;
+              `}
+            >
+              {tag.display_name}
+            </div>
+            <span
+              className="position-absolute text-center"
+              css={css`
+                bottom: 16px;
+                font-size: 12px;
+              `}
+            >
+              {tag.total_items.toString()} posts
+            </span>
+          </li>
+        ))}
       </ul>
     </div>
   );

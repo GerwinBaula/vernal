@@ -26,6 +26,13 @@ export default function (state, action) {
       return;
     }
 
+    case "getTagsSuccess": {
+      const tags = action.payload;
+      const slicedTags = tags.slice(0, 20);
+      state.entities.tags.list = slicedTags;
+      return;
+    }
+
     case "finalizeLogin": {
       const token = action.payload;
       state.auth.token = token;
@@ -61,12 +68,17 @@ export default function (state, action) {
     }
 
     case "query": {
-      state.ui.searchInput.query = action.payload;
+      state.ui.inputs.search.query = action.payload;
       return;
     }
 
     case "toggleFocused": {
-      state.ui.searchInput.isFocused = !state.ui.searchInput.isFocused;
+      state.ui.inputs.search.isFocused = !state.ui.inputs.search.isFocused;
+      return;
+    }
+
+    case "tagsSliderOffsetLeft": {
+      state.ui.scrollbars.tagsSlider.offsetLeft = action.payload;
       return;
     }
 

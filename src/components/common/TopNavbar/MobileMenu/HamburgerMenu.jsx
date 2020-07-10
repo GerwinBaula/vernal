@@ -15,11 +15,11 @@ function HamburgerMenu({
     left: 100px;
     min-height: 100px;
     width: 245px;
-    border: 1px solid var(--mobile-sidebar-border);
-    background-color: var(--mobile-sidebar-bg);
+    border: 1px solid var(--text-primary);
+    background-color: var(--bg-primary);
     border-radius: 5px;
     opacity: 0;
-    box-shadow: 0px 0.5px 3px 0px var(--text-primary-color);
+    box-shadow: 0px 0.5px 3px 0px var(--text-primary);
     transition: var(--transition-speed);
   `;
 

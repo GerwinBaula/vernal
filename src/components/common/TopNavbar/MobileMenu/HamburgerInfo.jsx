@@ -4,7 +4,7 @@ function HamburgerInfo({ username, bio, avatar }) {
   const imageStyle = {
     height: "40px",
     width: "40px",
-    border: "1px solid var(--avatar-border)",
+    border: "1px solid var(--text-primary)",
     borderRadius: "50px",
     backgroundImage: `url(${avatar})`,
     backgroundPosition: "center center",
@@ -12,7 +12,7 @@ function HamburgerInfo({ username, bio, avatar }) {
   };
 
   const textStyle = {
-    color: "var(--mobile-sidebar-text)",
+    color: "var(--text-primary)",
   };
 
   return (

@@ -27,8 +27,6 @@ function TopNavbar() {
         );
         const { data: results } = data;
 
-        if (!query.length)
-          return dispatch({ type: "getResultsSuccess", payload: [] });
         return dispatch({ type: "getResultsSuccess", payload: results });
       } catch (error) {
         dispatch({ type: "apiCallFailed" });
@@ -37,7 +35,7 @@ function TopNavbar() {
 
     let queryLater = setTimeout(() => {
       search(query);
-    }, 400);
+    }, 500);
 
     return () => {
       clearTimeout(queryLater);

@@ -11,7 +11,7 @@ function SideNavbarCheckbox({ checked, onCheckedChange }) {
 
     "&:checked ~ label > ul > li > a.activeSideNavItem": {
       "@media (max-width: 1200px)": {
-        backgroundColor: "var(--sidenav-bg-hovered)",
+        backgroundColor: "var(--bg-primary)",
       },
     },
 
@@ -25,7 +25,7 @@ function SideNavbarCheckbox({ checked, onCheckedChange }) {
 
     // Title Container
     "&:checked ~ label > ul > li > span": {
-      backgroundColor: "var(--sidenav-bg-hovered)",
+      backgroundColor: "var(--bg-primary)",
     },
 
     // Title Icon
@@ -35,18 +35,18 @@ function SideNavbarCheckbox({ checked, onCheckedChange }) {
 
     // Title First Icon
     "&:checked ~ label > ul > li > span > div > ion-icon:first-of-type": {
-      color: "var(--sidenav-icon-darker-hovered)",
+      color: "var(--bg-tertiary)",
     },
 
     // Title Second Icon
     "&:checked ~ label > ul > li > span > div > ion-icon:last-child": {
-      color: "var(--sidenav-icon-lighter-hovered)",
+      color: "var(--text-tertiary)",
     },
 
     // Title Text
     "&:checked ~ label > ul > li > span > span": {
       opacity: "1",
-      color: "var(--sidenav-text-hovered)",
+      color: "var(--text-primary)",
     },
   };
 

@@ -1,8 +1,12 @@
 export default {
   entities: {
-    results: [],
+    results: {
+      list: [],
+      isLoading: null,
+    },
     tags: {
       list: [],
+      isLoading: null,
       lastFetch: null,
     },
   },
@@ -30,3 +34,5 @@ export default {
   },
   apiCallsInProgress: 0,
 };
+
+// throw apiCallsInProgress or no?

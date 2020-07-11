@@ -3,22 +3,27 @@
   --white: #fff;
   --black: #000;
 
-  --first-color: #bdbcbc;
-  --second-color: #505050;
+  --first: #f8f9fa;
+  --second: #e9ecef;
+  --third: #dee2e6;
+  --fourth: #cdd1d4;
+  --fifth: #adb5bd;
+  --sixth: #6c757d;
+  --seventh: #495057;
+  --eighth: #343a40;
+  --ninth: #212529;
+  --tenth: #15171a;
 
-  --third-color: #63686e;
-  --fourth-color: #373640;
-
-  --fifth-color: #d14d56;
-  --sixth-color: #eb1624;
-
-  /* Light Theme */
-  --seventh-color: #efee9d;
-  --eighth-color: #fcf876;
-  --ninth-color: #fbfd8a;
-  --tenth-color: #f4e04d;
-  --eleventh-color: #fbfd8a;
-  --twelvth-color: #f4e04d;
+  --eleventh: #faf9f5;
+  --twelvth: #ffba08;
+  --thirteenth: #faa307;
+  --fourteenth: #f48c06;
+  --fifteenth: #e85d04;
+  --sixteenth: #e22d00;
+  --seventeenth: #d00000;
+  --eighteenth: #9d0208;
+  --nineteenth: #6a040f;
+  --twentienth: #03071e;
 
   --transition-speed: 0.4s all;
 
@@ -32,25 +37,28 @@ html {
 }
 
 .dark {
-  --text-primary: var(--first-color);
-  --bg-primary: var(--second-color);
+  --text-primary: var(--fourth);
+  --bg-primary: var(--ninth);
 
-  --text-secondary: var(--third-color);
-  --bg-secondary: var(--fourth-color);
+  --text-secondary: var(--sixth);
+  --bg-secondary: var(--tenth);
 
-  --text-tertiary: var(--fifth-color);
-  --bg-tertiary: var(--sixth-color);
+  --text-tertiary: var(--seventeenth);
+  --bg-tertiary: var(--sixteenth);
+
+  --text-quaternary: var(--eleventh);
+  --bg-quaternary: var(--tenth);
 }
 
 .light {
-  --text-primary: var(--first-color);
+  /* --text-primary: var(--first-color);
   --bg-primary: var(--seventh-color);
 
   --text-secondary: var(--first-color);
   --bg-secondary: var(--second-color);
 
   --text-tertiary: var(--third-color);
-  --bg-tertiary: var(--fourth-color);
+  --bg-tertiary: var(--fourth-color); */
 }
 
 body {

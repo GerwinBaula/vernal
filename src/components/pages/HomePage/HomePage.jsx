@@ -3,9 +3,10 @@ import { css } from "@emotion/core";
 import { StateContext, DispatchContext } from "../../state/contexts";
 import selectors from "../../state/selectors";
 import httpService from "../../services/httpService";
+import { Link } from "react-router-dom";
+import Loading from "../../common/Loading";
 import _ from "lodash";
 
-// Add Caching
 function HomePage() {
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext);
@@ -47,6 +48,7 @@ function HomePage() {
   function handleMobileSliderDown(e) {
     isDown = true;
     startX = e.changedTouches[0].pageX - slider.current.offsetLeft;
+    scrollLeft = slider.current.scrollLeft;
   }
 
   function handleMobileSliderMove(e) {
@@ -65,7 +67,6 @@ function HomePage() {
   useEffect(() => {
     async function loadTags() {
       try {
-        // Condition for caching
         dispatch({ type: "apiCallBegan" });
 
         const { data } = await httpService.get(`https://api.imgur.com/3/tags`);
@@ -84,12 +85,77 @@ function HomePage() {
   return (
     <div
       className={`container-fluid ${
-        !loggedInStatus ? "p-0 pt-4" : "pl-4 pt-4 pr-0"
+        !loggedInStatus ? "pt-4 px-3 px-xl-0" : "pt-4"
       }`}
     >
+      <Loading />
+      <div
+        className="jumbotron px-4 px-md-5"
+        css={css`
+          border-radius: 1px;
+          background-image: linear-gradient(
+            to right,
+            var(--bg-primary),
+            var(--text-primary)
+          );
+          color: var(--text-quaternary);
+
+          @media (max-width: 575px) {
+            padding-top: 50px;
+            padding-bottom: 50px;
+          }
+        `}
+      >
+        <h1
+          className="lead"
+          css={css`
+            font-size: 70px;
+
+            @media (max-width: 768px) {
+              font-size: 60px;
+            }
+
+            @media (max-width: 575px) {
+              font-size: 50px;
+            }
+          `}
+        >
+          Welcome to Vernal!
+        </h1>
+        <hr className="my-2" />
+        <p
+          className="lead"
+          css={css`
+            word-spacing: 2px;
+            font-size: 20px;
+
+            @media (max-width: 768px) {
+              font-size: 18px;
+            }
+
+            @media (max-width: 575px) {
+              font-size: 16px;
+            }
+          `}
+        >
+          Bored? We've got your back! Discover spicy memes, pets in sweaters,
+          awe-inspiring science facts, video game Easter eggs, and all the rest
+          of the Internet’s most entertaining stuff.
+        </p>
+      </div>
       <div className="container pl-0 pr-3 pr-xl-0 mb-2 d-flex justify-content-between align-items-center">
         <h4 className="m-0">Tags</h4>
-        <div className="d-flex align-items-center">
+        <Link
+          to="/tags"
+          className="d-flex align-items-center"
+          css={css`
+            color: var(--bg-primary);
+
+            &:hover {
+              color: var(--bg-primary);
+            }
+          `}
+        >
           <span className="mr-1">SEE ALL</span>
           <span
             className="position-relative"
@@ -99,7 +165,7 @@ function HomePage() {
           >
             &#8594;
           </span>
-        </div>
+        </Link>
       </div>
       <ul
         className="list-unstyled m-0 pr-3 pr-xl-0"
@@ -117,30 +183,46 @@ function HomePage() {
           overflow: hidden;
           cursor: grabbing;
 
-          li:nth-of-type(4n + 1) {
+          a:not(:last-child) {
+            margin-right: 12px;
+          }
+
+          a:nth-of-type(6n + 1) {
             background: var(--text-primary);
-            color: var(--white);
+            color: var(--text-quaternary);
           }
 
-          li:nth-of-type(4n + 2) {
+          a:nth-of-type(6n + 2) {
             background: var(--text-secondary);
-            color: var(--white);
+            color: var(--text-quaternary);
           }
 
-          li:nth-of-type(4n + 3) {
+          a:nth-of-type(6n + 3) {
             background: var(--bg-primary);
-            color: var(--white);
+            color: var(--text-quaternary);
           }
 
-          li:nth-of-type(4n + 4) {
+          a:nth-of-type(6n + 4) {
             background: var(--bg-secondary);
-            color: var(--white);
+            color: var(--text-quaternary);
+          }
+
+          a:nth-of-type(6n + 5) {
+            background: var(--text-tertiary);
+            color: var(--text-quaternary);
+          }
+
+          a:nth-of-type(6n + 6) {
+            background: var(--bg-tertiary);
+            color: var(--text-quaternary);
           }
         `}
       >
-        {tags.list.map((tag) => (
-          <li
-            className="d-inline-flex flex-column justify-content-start align-items-center mr-3 position-relative"
+        {tags.list.slice(0, 20).map((tag) => (
+          <Link
+            to={`/tag/${tag.display_name}`}
+            key={tag.background_hash}
+            className="d-inline-flex flex-column justify-content-start align-items-center position-relative"
             css={css`
               height: 100%;
               width: 140px;
@@ -168,7 +250,7 @@ function HomePage() {
             >
               {tag.total_items.toString()} posts
             </span>
-          </li>
+          </Link>
         ))}
       </ul>
     </div>

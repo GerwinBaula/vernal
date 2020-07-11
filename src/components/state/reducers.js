@@ -22,14 +22,13 @@ export default function (state, action) {
     case "getResultsSuccess": {
       const results = action.payload;
       const slicedResults = results.slice(0, 5);
-      state.entities.results = slicedResults;
+      state.entities.results.list = slicedResults;
       return;
     }
 
     case "getTagsSuccess": {
       const tags = action.payload;
-      const slicedTags = tags.slice(0, 20);
-      state.entities.tags.list = slicedTags;
+      state.entities.tags.list = tags;
       return;
     }
 

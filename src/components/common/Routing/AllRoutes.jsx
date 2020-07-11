@@ -10,6 +10,7 @@ import PostsPage from "../../pages/PostsPage/PostsPage";
 import ProfilePage from "../../pages/ProfilePage/ProfilePage";
 import ResultsPage from "../../pages/ResultsPage/ResultsPage";
 import TagsPage from "../../pages/TagsPage/TagsPage";
+import TagPage from "../../pages/TagPage/TagPage";
 import SettingsPage from "../../pages/SettingsPage/SettingsPage";
 import LoginHandler from "../AuthHandlers/LoginHandler";
 import LogoutHandler from "../AuthHandlers/LogoutHandler";
@@ -28,6 +29,7 @@ function AllRoutes() {
       <ProtectedRoute path="/profile" component={ProfilePage} />
       <Route path="/results" component={ResultsPage} />
       <Route path="/tags" component={TagsPage} />
+      <Route path="/tag/:id" component={TagPage} />
       <ProtectedRoute path="/settings" component={SettingsPage} />
       <Route path="/image/:id" component={ImagePage} />
       <Route path="/oauth2/callback" component={LoginHandler} />

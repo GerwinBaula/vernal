@@ -14,7 +14,7 @@ function SideNavbarItem({ checked, item, onCheckedChange, onToggleChange }) {
     },
 
     "&:hover ion-icon": {
-      color: "var(--fifth-color)",
+      color: "var(--bg-tertiary)",
     },
 
     "&:hover span": {
@@ -31,7 +31,7 @@ function SideNavbarItem({ checked, item, onCheckedChange, onToggleChange }) {
       fontSize: "30px",
       transition: "var(--transition-speed)",
       color: `${
-        item.route === pathname ? "var(--fifth-color)" : "var(--bg-primary)"
+        item.route === pathname ? "var(--bg-tertiary)" : "var(--bg-primary)"
       }`,
 
       "@media (max-width: 1200px)": {

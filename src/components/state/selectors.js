@@ -5,7 +5,7 @@ export default {
   getCheckbox: (state, name) => state.ui.checkboxes[name],
   getQuery: (state) => state.ui.inputs.search.query,
   getSearchInputState: (state) => state.ui.inputs.search.isFocused,
-  getResults: (state) => state.entities.results,
+  getResults: (state) => state.entities.results.list,
   getTags: (state) => state.entities.tags,
   getTagsSliderOffsetLeft: (state) => state.ui.scrollbars.tagsSlider.offsetLeft,
 };

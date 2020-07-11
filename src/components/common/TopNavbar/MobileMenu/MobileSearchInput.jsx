@@ -1,10 +1,12 @@
 import React from "react";
 import { css } from "@emotion/core";
 import { useHistory } from "react-router-dom";
+import TopNavbarLoading from "../TopNavbarLoading";
 
 function MobileSearchInput({
   query,
   results,
+  resultsLoading,
   onInputChange,
   isFocused,
   onFocusChange,
@@ -68,11 +70,15 @@ function MobileSearchInput({
         className="m-0 pl-2 py-2 pr-1 d-flex justify-content-center align-items-center"
         css={buttonStyle}
       >
-        <ion-icon name="search-outline"></ion-icon>
+        {!resultsLoading ? (
+          <ion-icon name="search-outline"></ion-icon>
+        ) : (
+          <TopNavbarLoading />
+        )}
       </button>
       <input
         type="text"
-        className="w-100 mr-3"
+        className="w-100 mr-3 pl-1"
         placeholder="Search some images... or memes."
         value={query}
         onChange={onInputChange}

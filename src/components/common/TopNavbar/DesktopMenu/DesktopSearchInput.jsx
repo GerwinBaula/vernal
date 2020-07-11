@@ -5,6 +5,7 @@ function DesktopSearchInput({
   loggedInStatus,
   query,
   results,
+  resultsLoading,
   onInputChange,
   onSearch,
   isFocused,
@@ -20,6 +21,7 @@ function DesktopSearchInput({
         <SearchInput
           query={query}
           results={results}
+          resultsLoading={resultsLoading}
           onInputChange={onInputChange}
           onSearch={onSearch}
           isFocused={isFocused}

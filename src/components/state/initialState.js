@@ -11,8 +11,8 @@ export default {
     },
   },
   auth: {
-    token: window.localStorage.getItem("imgur_token"),
-    user: JSON.parse(window.localStorage.getItem("current_user")) || {},
+    token: window.localStorage.getItem("vernal_token"),
+    user: JSON.parse(window.localStorage.getItem("vernal_user")) || {},
   },
   ui: {
     theme: window.localStorage.getItem("vernal_theme") || "dark",
@@ -32,7 +32,4 @@ export default {
       },
     },
   },
-  apiCallsInProgress: 0,
 };
-
-// throw apiCallsInProgress or no?

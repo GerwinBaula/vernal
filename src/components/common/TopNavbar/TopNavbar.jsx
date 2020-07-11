@@ -12,6 +12,7 @@ function TopNavbar() {
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext);
   const results = stateSelectors.getResults(state);
+  const resultsLoading = stateSelectors.getResultsLoadingStatus(state);
   const query = stateSelectors.getQuery(state);
   const loggedInStatus = stateSelectors.getLoggedInStatus(state);
   const isFocused = stateSelectors.getSearchInputState(state);
@@ -20,16 +21,14 @@ function TopNavbar() {
   useEffect(() => {
     async function search(query) {
       try {
-        dispatch({ type: "apiCallBegan" });
-
         const { data } = await httpService.get(
           `https://api.imgur.com/3/gallery/search?q=${query}`
         );
         const { data: results } = data;
 
-        return dispatch({ type: "getResultsSuccess", payload: results });
+        return dispatch({ type: "resultsReceived", payload: results });
       } catch (error) {
-        dispatch({ type: "apiCallFailed" });
+        dispatch({ type: "resultsRequestFailed", payload: error.message });
       }
     }
 
@@ -53,7 +52,7 @@ function TopNavbar() {
 
   function handleInputChange({ target: input }) {
     dispatch({ type: "query", payload: input.value });
-    // performDebounce(input.value);
+    dispatch({ type: "resultsRequest" });
   }
 
   function handleFocusChange() {
@@ -80,6 +79,7 @@ function TopNavbar() {
       <TopNavbarContainer
         query={query}
         results={results}
+        resultsLoading={resultsLoading}
         onInputChange={handleInputChange}
         onSearch={handleSubmit}
         isFocused={isFocused}

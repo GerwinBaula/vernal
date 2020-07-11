@@ -17,15 +17,14 @@ function LoginHandler({ location: { hash } }) {
         } = await httpService.get(
           `https://api.imgur.com/3/account/${username}`
         );
-        dispatch({ type: "getUserSuccess", payload: userData });
+
+        dispatch({ type: "userReceived", payload: userData });
       } catch (error) {
-        // u can pass the error.message in the payload
-        dispatch({ type: "apiCallFailed" });
+        dispatch({ type: "userRequestFailed", payload: error.message });
       }
     }
 
     if ("access_token" in query) {
-      dispatch({ type: "apiCallBegan" });
       getUser(query.account_username);
       return dispatch({ type: "finalizeLogin", payload: query.access_token });
     }

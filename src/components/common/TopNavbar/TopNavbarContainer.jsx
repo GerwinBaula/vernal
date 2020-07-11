@@ -4,6 +4,7 @@ import TopNavbarContents from "./TopNavbarContents";
 function TopNavbarContainer({
   query,
   results,
+  resultsLoading,
   onInputChange,
   onSearch,
   isFocused,
@@ -34,6 +35,7 @@ function TopNavbarContainer({
       <TopNavbarContents
         query={query}
         results={results}
+        resultsLoading={resultsLoading}
         onInputChange={onInputChange}
         onSearch={onSearch}
         isFocused={isFocused}

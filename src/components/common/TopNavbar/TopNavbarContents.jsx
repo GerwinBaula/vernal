@@ -8,6 +8,7 @@ import MobileSearchInput from "./MobileMenu/MobileSearchInput";
 function TopNavbarContents({
   query,
   results,
+  resultsLoading,
   onInputChange,
   onSearch,
   isFocused,
@@ -21,9 +22,10 @@ function TopNavbarContents({
       <MobileSearchInput
         query={query}
         results={results}
+        resultsLoading={resultsLoading}
+        isFocused={isFocused}
         onInputChange={onInputChange}
         onSearch={onSearch}
-        isFocused={isFocused}
         onFocusChange={onFocusChange}
       />
       <Name loggedInStatus={loggedInStatus} />
@@ -32,6 +34,7 @@ function TopNavbarContents({
         loggedInStatus={loggedInStatus}
         query={query}
         results={results}
+        resultsLoading={resultsLoading}
         onInputChange={onInputChange}
         onSearch={onSearch}
         isFocused={isFocused}

@@ -1,10 +1,12 @@
 import React from "react";
 import { css } from "@emotion/core";
 import { useHistory } from "react-router-dom";
+import TopNavbarLoading from "../TopNavbarLoading";
 
 function SearchInput({
   query,
   results,
+  resultsLoading,
   onInputChange,
   isFocused,
   onFocusChange,
@@ -31,7 +33,8 @@ function SearchInput({
     background-color: var(--bg-primary);
     border-left: none;
     color: var(--text-primary);
-    font-size: 18px;
+    font-size: 20px;
+    padding-right: 10px;
 
     &:focus {
       outline: none;
@@ -74,10 +77,14 @@ function SearchInput({
       <div className="px-0 d-flex justify-content-center align-items-center">
         <button
           type="submit"
-          className="h-100 d-flex align-items-center pr-3"
+          className="h-100 d-flex align-items-center"
           css={buttonStyle}
         >
-          <ion-icon name="search-outline"></ion-icon>
+          {!resultsLoading ? (
+            <ion-icon name="search-outline"></ion-icon>
+          ) : (
+            <TopNavbarLoading />
+          )}
         </button>
       </div>
       {!results.length || !isFocused || (

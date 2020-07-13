@@ -4,12 +4,14 @@ import selectors from "../../state/selectors";
 import { css } from "@emotion/core";
 import httpService from "../../services/httpService";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
 
 function TagsPage() {
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext);
+  const history = useHistory();
   const loggedInStatus = selectors.getLoggedInStatus(state);
-  const tags = selectors.getTags(state);
+  const tags = selectors.getTags(state).slice(0, 100);
   const tagsLoading = selectors.getTagsLoadingState(state);
   const tagsLastFetch = selectors.getTagsLastFetch(state);
 
@@ -26,8 +28,6 @@ function TagsPage() {
         const { data: anotherData } = data;
         const { tags } = anotherData;
 
-        console.log(anotherData);
-
         return dispatch({ type: "tagsReceived", payload: tags });
       } catch (error) {
         dispatch({ type: "tagsRequestFailed", payload: error.message });
@@ -43,7 +43,7 @@ function TagsPage() {
         !loggedInStatus ? "pt-4 px-3 px-xl-0" : "pt-4 pr-3 pr-xl-0"
       }`}
     >
-      <div className="mb-2 ml-2">
+      <div className="mb-2 mx-2">
         <h4 className="m-0">All Tags</h4>
       </div>
 
@@ -104,6 +104,7 @@ function TagsPage() {
         {!tagsLoading ? (
           tags.map((tag) => (
             <li
+              onClick={() => history.push(`/tag/${tag.display_name}`)}
               key={tag.display_name}
               className="flex-fill m-2"
               css={css`
@@ -111,6 +112,7 @@ function TagsPage() {
                 width: 150px;
                 border-radius: 1px;
                 word-break: break-word;
+                cursor: pointer;
               `}
             >
               <div
@@ -126,7 +128,6 @@ function TagsPage() {
               >
                 {tag.display_name}
               </div>
-              {/* <span>{tag.total_items.toString()} posts</span> */}
             </li>
           ))
         ) : (

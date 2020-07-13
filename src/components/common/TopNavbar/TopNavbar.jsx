@@ -33,13 +33,12 @@ function TopNavbar() {
         dispatch({ type: "resultsRequestFailed", payload: error.message });
       }
     }
-
-    let queryLater = setInterval(() => {
+    let queryLater = setTimeout(() => {
       search(query);
-    }, 300);
+    }, 500);
 
     return () => {
-      clearInterval(queryLater);
+      clearTimeout(queryLater);
     };
   }, [query, dispatch]);
 

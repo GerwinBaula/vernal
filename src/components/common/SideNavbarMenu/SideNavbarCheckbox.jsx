@@ -8,13 +8,11 @@ function SideNavbarCheckbox({ checked, onCheckedChange }) {
         width: "100vw",
       },
     },
-
     "&:checked ~ label > ul > li > a.activeSideNavItem": {
       "@media (max-width: 1200px)": {
         backgroundColor: "var(--bg-primary)",
       },
     },
-
     // List Text
     "&:checked ~ label > ul > li > a > span": {
       display: "flex !important",
@@ -22,27 +20,22 @@ function SideNavbarCheckbox({ checked, onCheckedChange }) {
         display: "none !important",
       },
     },
-
     // Title Container
     "&:checked ~ label > ul > li > span": {
       backgroundColor: "var(--bg-primary)",
     },
-
     // Title Icon
     "&:checked ~ label > ul > li > span > div": {
       transform: "rotate(-180deg)",
     },
-
     // Title First Icon
     "&:checked ~ label > ul > li > span > div > ion-icon:first-of-type": {
       color: "var(--bg-tertiary)",
     },
-
     // Title Second Icon
     "&:checked ~ label > ul > li > span > div > ion-icon:last-child": {
       color: "var(--text-tertiary)",
     },
-
     // Title Text
     "&:checked ~ label > ul > li > span > span": {
       opacity: "1",

@@ -11,6 +11,9 @@ function SideNavbarItem({ checked, item, onCheckedChange, onThemeChange }) {
 
     "&:hover": {
       backgroundColor: "var(--bg-primary)",
+      "@media (max-width: 575px)": {
+        backgroundColor: "var(--text-primary)",
+      },
     },
 
     "&:hover ion-icon": {

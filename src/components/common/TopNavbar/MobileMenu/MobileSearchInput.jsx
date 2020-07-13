@@ -82,8 +82,8 @@ function MobileSearchInput({
         placeholder="Search some images... or memes."
         value={query}
         onChange={onInputChange}
-        onFocus={() => onFocusChange(!isFocused)}
-        onBlur={() => onFocusChange(!isFocused)}
+        onFocus={() => onFocusChange(true)}
+        onBlur={() => onFocusChange(false)}
         css={inputStyle}
       />
       {!results.length || !isFocused || (

@@ -259,6 +259,7 @@ function HomePage() {
                 width: 140px;
                 white-space: normal;
                 border-radius: 1px;
+                cursor: pointer;
               `}
             >
               <div

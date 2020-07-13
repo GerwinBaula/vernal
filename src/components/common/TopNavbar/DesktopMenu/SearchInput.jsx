@@ -70,8 +70,8 @@ function SearchInput({
           value={query}
           onChange={onInputChange}
           css={inputStyle}
-          onFocus={() => onFocusChange(!isFocused)}
-          onBlur={() => onFocusChange(!isFocused)}
+          onFocus={() => onFocusChange(true)}
+          onBlur={() => onFocusChange(false)}
         />
       </div>
       <div className="px-0 d-flex justify-content-center align-items-center">

@@ -22,6 +22,50 @@ function SideNavbarLabel({
 
       height: 100.2vh;
       transform: translateY(-66px);
+
+      // &:hover {
+      //   width: var(--sidenav-offset-hovered);
+      //   @media (max-width: 575px) {
+      //     width: 100vw;
+      //   }
+      // }
+
+      // &:hover > ul > li > a.activeSideNavItem {
+      //   @media (max-width: 1200px) {
+      //     background-color: var(--bg-primary);
+      //   }
+      //   @media (max-width: 575px) {
+      //     background-color: var(--text-primary);
+      //   }
+      // }
+
+      // &:hover > ul > li > a > span {
+      //   display: flex !important;
+      //   @media (max-width: 575px) {
+      //     display: none !important;
+      //   }
+      // }
+
+      // &:hover > ul > li > span {
+      //   background-color: var(--bg-primary);
+      // }
+
+      // &:hover > ul > li > span > div {
+      //   transform: rotate(-180deg);
+      // }
+
+      // &:hover > ul > li > span > div > ion-icon:first-of-type {
+      //   color: var(--bg-tertiary);
+      // }
+
+      // &:hover > ul > li > span > div > ion-icon:last-child {
+      //   color: var(--text-tertiary);
+      // }
+
+      // &:hover > ul > li > span > span {
+      //   opacity: 1;
+      //   color: var(--text-primary);
+      // }
     }
 
     @media (max-width: 575px) {

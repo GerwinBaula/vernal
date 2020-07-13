@@ -4,11 +4,11 @@ import { Redirect } from "react-router-dom";
 import httpService from "../../services/httpService";
 import qs from "qs";
 
-function LoginHandler({ location: { hash } }) {
+function LoginHandler({ location }) {
   const dispatch = useContext(DispatchContext);
 
   useEffect(() => {
-    const query = qs.parse(hash.replace("#", ""));
+    const query = qs.parse(location.hash.replace("#", ""));
 
     async function getUser(username) {
       try {
@@ -31,7 +31,7 @@ function LoginHandler({ location: { hash } }) {
     return;
   });
 
-  return <Redirect to="/" />;
+  return <Redirect to={`${location.search.replace("?state=%2F", "/")}`} />;
 }
 
 export default LoginHandler;

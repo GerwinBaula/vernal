@@ -6,7 +6,7 @@ function SideNavbarList({
   checked,
   listItems,
   onCheckedChange,
-  onToggleChange,
+  onThemeChange,
 }) {
   return (
     <ul className="d-flex flex-row flex-sm-column align-items-center list-unstyled py-0 m-0 h-100">
@@ -19,7 +19,7 @@ function SideNavbarList({
               checked={checked}
               item={item}
               onCheckedChange={onCheckedChange}
-              onToggleChange={onToggleChange}
+              onThemeChange={onThemeChange}
             />
           )}
         </li>

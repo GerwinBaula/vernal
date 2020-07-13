@@ -67,36 +67,19 @@ export default function (state, action) {
     }
 
     case "toggleTheme": {
-      if (state.ui.theme === "dark") {
-        state.ui.theme = "light";
+      if (state.theme === "dark") {
+        state.theme = "light";
         window.localStorage.setItem("vernal_theme", "light");
         return;
       } else {
-        state.ui.theme = "dark";
+        state.theme = "dark";
         window.localStorage.setItem("vernal_theme", "dark");
         return;
       }
     }
 
-    case "toggleCheckbox": {
-      const name = action.payload;
-
-      state.ui.checkboxes[name] = !state.ui.checkboxes[name];
-      return;
-    }
-
-    case "query": {
-      state.ui.inputs.search.query = action.payload;
-      return;
-    }
-
-    case "toggleFocused": {
-      state.ui.inputs.search.isFocused = !state.ui.inputs.search.isFocused;
-      return;
-    }
-
     case "tagsSliderOffsetLeft": {
-      state.ui.scrollbars.tagsSlider.offsetLeft = action.payload;
+      state.scrollbars.tagsSlider.offsetLeft = action.payload;
       return;
     }
 

@@ -2,7 +2,7 @@ import React from "react";
 import SideNavbarLabel from "./SideNavbarLabel";
 import SideNavbarCheckbox from "./SideNavbarCheckbox";
 
-function SideNavbar({ listItems, checked, onCheckedChange, onToggleChange }) {
+function SideNavbar({ listItems, checked, onCheckedChange, onThemeChange }) {
   return (
     <nav>
       <SideNavbarCheckbox checked={checked} onCheckedChange={onCheckedChange} />
@@ -10,7 +10,7 @@ function SideNavbar({ listItems, checked, onCheckedChange, onToggleChange }) {
         checked={checked}
         listItems={listItems}
         onCheckedChange={onCheckedChange}
-        onToggleChange={onToggleChange}
+        onThemeChange={onThemeChange}
       />
     </nav>
   );

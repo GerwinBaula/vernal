@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StateContext, DispatchContext } from "../../state/contexts";
 import BehindTopNavbarContainer from "./BehindTopNavbarContainer";
 import TopNavbarContainer from "./TopNavbarContainer";
 import stateSelectors from "../../state/selectors";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import httpService from "../../services/httpService";
 import config from "../../../config";
 import qs from "qs";
@@ -13,10 +13,12 @@ function TopNavbar() {
   const dispatch = useContext(DispatchContext);
   const results = stateSelectors.getResults(state);
   const resultsLoading = stateSelectors.getResultsLoadingStatus(state);
-  const query = stateSelectors.getQuery(state);
   const loggedInStatus = stateSelectors.getLoggedInStatus(state);
-  const isFocused = stateSelectors.getSearchInputState(state);
   const history = useHistory();
+  const location = useLocation();
+
+  const [query, setQuery] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     async function search(query) {
@@ -32,12 +34,12 @@ function TopNavbar() {
       }
     }
 
-    let queryLater = setTimeout(() => {
+    let queryLater = setInterval(() => {
       search(query);
-    }, 500);
+    }, 300);
 
     return () => {
-      clearTimeout(queryLater);
+      clearInterval(queryLater);
     };
   }, [query, dispatch]);
 
@@ -46,23 +48,20 @@ function TopNavbar() {
     // Idk this pa pero yeah we can do this better
     history.push(`/results?query=${query}`);
 
-    dispatch({ type: "apiCallBegan" });
+    dispatch({ type: "resultsRequest" });
     dispatch({ type: "getResultsSuccess", payload: [] });
   }
 
   function handleInputChange({ target: input }) {
-    dispatch({ type: "query", payload: input.value });
+    setQuery(input.value);
     dispatch({ type: "resultsRequest" });
-  }
-
-  function handleFocusChange() {
-    dispatch({ type: "toggleFocused" });
   }
 
   function handleInitializeLogin() {
     const queryString = {
       client_id: config.clientId,
       response_type: "token",
+      state: location.pathname,
     };
 
     window.location = `${config.rootUrl}/oauth2/authorize?${qs.stringify(
@@ -71,7 +70,10 @@ function TopNavbar() {
   }
 
   function handleLogout() {
-    history.push("/logout");
+    history.push({
+      pathname: "/logout",
+      state: { url: location.pathname },
+    });
   }
 
   return (
@@ -83,7 +85,7 @@ function TopNavbar() {
         onInputChange={handleInputChange}
         onSearch={handleSubmit}
         isFocused={isFocused}
-        onFocusChange={handleFocusChange}
+        onFocusChange={setIsFocused}
         loggedInStatus={loggedInStatus}
         onLogin={handleInitializeLogin}
         onLogout={handleLogout}

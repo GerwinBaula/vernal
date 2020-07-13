@@ -6,7 +6,7 @@ function SideNavbarLabel({
   checked,
   listItems,
   onCheckedChange,
-  onToggleChange,
+  onThemeChange,
 }) {
   const labelStyle = css`
     position: fixed;
@@ -38,15 +38,15 @@ function SideNavbarLabel({
     <label
       htmlFor="toggle-sidenav"
       className="overflow-hidden m-0"
-      onMouseLeave={() => checked && onCheckedChange()}
-      onMouseEnter={() => !checked && onCheckedChange()}
+      onMouseLeave={() => checked && onCheckedChange(!checked)}
+      onMouseEnter={() => !checked && onCheckedChange(!checked)}
       css={labelStyle}
     >
       <SideNavbarList
         checked={checked}
         listItems={listItems}
         onCheckedChange={onCheckedChange}
-        onToggleChange={onToggleChange}
+        onThemeChange={onThemeChange}
       />
     </label>
   );

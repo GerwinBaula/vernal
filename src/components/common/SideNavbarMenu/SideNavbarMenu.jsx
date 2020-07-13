@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { StateContext, DispatchContext } from "../../state/contexts";
 import stateSelectors from "../../state/selectors";
 import SideNavbar from "./SideNavbar";
@@ -8,14 +8,10 @@ function SideNavbarMenu() {
   const dispatch = useContext(DispatchContext);
   const loggedInStatus = stateSelectors.getLoggedInStatus(state);
   const theme = stateSelectors.getCurrentTheme(state);
-  const checkboxName = "sidenav";
-  const checked = stateSelectors.getCheckbox(state, checkboxName);
 
-  function handleCheckedChange() {
-    dispatch({ type: "toggleCheckbox", payload: checkboxName });
-  }
+  const [checked, setChecked] = useState(false);
 
-  function handleToggleChange() {
+  function handleThemeChange() {
     dispatch({ type: "toggleTheme" });
   }
 
@@ -67,8 +63,8 @@ function SideNavbarMenu() {
         <SideNavbar
           listItems={listItems}
           checked={checked}
-          onCheckedChange={handleCheckedChange}
-          onToggleChange={handleToggleChange}
+          onCheckedChange={setChecked}
+          onThemeChange={handleThemeChange}
         />
       )}
     </>

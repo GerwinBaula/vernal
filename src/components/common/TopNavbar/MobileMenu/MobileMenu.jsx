@@ -1,19 +1,14 @@
-import React, { useContext } from "react";
-import { StateContext, DispatchContext } from "../../../state/contexts";
+import React, { useState, useContext } from "react";
+import { StateContext } from "../../../state/contexts";
 import stateSelectors from "../../../state/selectors";
 import HamburgerMenu from "./HamburgerMenu";
 import Hamburger from "./Hamburger";
 
 function MobileMenu() {
   const state = useContext(StateContext);
-  const dispatch = useContext(DispatchContext);
   const user = stateSelectors.getCurrentUser(state);
-  const checkboxName = "mobile";
-  const checked = stateSelectors.getCheckbox(state, checkboxName);
 
-  function handleCheckedChange() {
-    dispatch({ type: "toggleCheckbox", payload: checkboxName });
-  }
+  const [checked, setChecked] = useState(false);
 
   const firstSetOfLinks = [
     { route: "/posts", icon: "reader", text: "Posts" },
@@ -29,7 +24,7 @@ function MobileMenu() {
 
   return (
     <div className="d-block d-sm-none position-relative">
-      <Hamburger checked={checked} onCheckedChange={handleCheckedChange} />
+      <Hamburger checked={checked} onCheckedChange={setChecked} />
       <HamburgerMenu
         username={user.url}
         bio={user.bio}

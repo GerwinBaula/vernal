@@ -7,7 +7,6 @@ import { Link, useHistory } from "react-router-dom";
 import _ from "lodash";
 import moment from "moment";
 
-//  You can redirect to using mouseUp or mouseDown. CLUE!!!!!!!!!!! MOUSE UP
 function HomePage() {
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext);
@@ -26,6 +25,8 @@ function HomePage() {
   let startX;
   let scrollLeft;
   let walk;
+  let downPosition;
+  let upPosition;
 
   const debounceSliderMove = useCallback(
     _.debounce((offsetLeft) => {
@@ -38,7 +39,12 @@ function HomePage() {
     isDown = true;
     startX = e.pageX - slider.current.offsetLeft;
     scrollLeft = slider.current.scrollLeft;
-    console.log("slider down");
+    downPosition = e.pageX;
+  }
+
+  function handleSliderUp(e) {
+    isDown = false;
+    upPosition = e.pageX;
   }
 
   function handleSliderMove(e) {
@@ -48,7 +54,6 @@ function HomePage() {
     const x = e.pageX - slider.current.offsetLeft;
     const walk = (x - startX) * speed;
     slider.current.scrollLeft = scrollLeft - walk;
-    console.log("slider moving");
 
     debounceSliderMove(scrollLeft - walk);
   }
@@ -57,6 +62,12 @@ function HomePage() {
     isDown = true;
     startX = e.changedTouches[0].pageX - slider.current.offsetLeft;
     scrollLeft = slider.current.scrollLeft;
+    downPosition = e.pageX;
+  }
+
+  function handleMobileSliderUp(e) {
+    isDown = false;
+    upPosition = e.pageX;
   }
 
   function handleMobileSliderMove(e) {
@@ -84,6 +95,8 @@ function HomePage() {
         const { data } = await httpService.get(`https://api.imgur.com/3/tags`);
         const { data: anotherData } = data;
         const { tags } = anotherData;
+
+        console.log(anotherData);
 
         return dispatch({ type: "tagsReceived", payload: tags });
       } catch (error) {
@@ -154,6 +167,7 @@ function HomePage() {
           of the Internet’s most entertaining stuff.
         </p>
       </div>
+
       <div className="container-xl p-0 pr-xl-0 mb-2 d-flex justify-content-between align-items-center">
         <h4 className="m-0">Tags</h4>
         <Link
@@ -178,15 +192,16 @@ function HomePage() {
           </span>
         </Link>
       </div>
+
       <ul
-        className="list-unstyled m-0 pr-3 pr-xl-0"
+        className="list-unstyled mx-0 mt-0 mb-4 pr-3 pr-xl-0"
         ref={slider}
         onMouseDown={handleSliderDown}
-        onMouseUp={() => (isDown = false)}
+        onMouseUp={handleSliderUp}
         onMouseLeave={() => (isDown = false)}
         onMouseMove={handleSliderMove}
         onTouchStart={handleMobileSliderDown}
-        onTouchEnd={() => (isDown = false)}
+        onTouchEnd={handleMobileSliderUp}
         onTouchMove={handleMobileSliderMove}
         css={css`
           white-space: nowrap;
@@ -232,11 +247,10 @@ function HomePage() {
         {!tagsLoading ? (
           introTags.map((tag) => (
             <li
-              onMouseDown={() => console.log("list down")}
-              onMouseUp={() => console.log("list up")}
               onClick={() => {
-                console.log("list click");
-                // history.push(`/tag/${tag.display_name}`);
+                if (downPosition === upPosition)
+                  return history.push(`/tag/${tag.display_name}`);
+                return;
               }}
               key={tag.display_name}
               className="d-inline-flex flex-column justify-content-start align-items-center position-relative"
@@ -274,8 +288,8 @@ function HomePage() {
           <div className="h-100 w-100 d-flex justify-content-center align-items-center">
             <div
               css={css`
-                width: 25px;
-                height: 25px;
+                width: 20px;
+                height: 20px;
                 background-color: var(--bg-secondary);
                 border-radius: 50%;
                 display: inline-block;
@@ -298,8 +312,8 @@ function HomePage() {
             <div
               className="mx-2"
               css={css`
-                width: 25px;
-                height: 25px;
+                width: 20px;
+                height: 20px;
                 background-color: var(--bg-secondary);
                 border-radius: 50%;
                 display: inline-block;
@@ -321,8 +335,8 @@ function HomePage() {
             ></div>
             <div
               css={css`
-                width: 25px;
-                height: 25px;
+                width: 20px;
+                height: 20px;
                 background-color: var(--bg-secondary);
                 border-radius: 50%;
                 display: inline-block;

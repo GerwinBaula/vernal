@@ -7,13 +7,13 @@ import { useHistory, useLocation } from "react-router-dom";
 import httpService from "../../services/httpService";
 import config from "../../../config";
 import qs from "qs";
+import useCheckbox from "../../customHooks/useCheckbox";
 
-function TopNavbar() {
+function TopNavbar({ isLoggedIn, user }) {
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext);
   const results = stateSelectors.getResults(state);
   const resultsLoading = stateSelectors.getResultsLoadingStatus(state);
-  const loggedInStatus = stateSelectors.getLoggedInStatus(state);
   const history = useHistory();
   const location = useLocation();
 
@@ -48,7 +48,7 @@ function TopNavbar() {
     history.push(`/results?query=${query}`);
 
     dispatch({ type: "resultsRequest" });
-    dispatch({ type: "getResultsSuccess", payload: [] });
+    dispatch({ type: "resultsReceived", payload: [] });
   }
 
   function handleInputChange({ target: input }) {
@@ -56,24 +56,40 @@ function TopNavbar() {
     dispatch({ type: "resultsRequest" });
   }
 
-  function handleInitializeLogin() {
-    const queryString = {
-      client_id: config.clientId,
-      response_type: "token",
-      state: location.pathname,
-    };
+  const [checked, handleCheckedChange] = useCheckbox();
 
-    window.location = `${config.rootUrl}/oauth2/authorize?${qs.stringify(
-      queryString
-    )}`;
-  }
-
-  function handleLogout() {
-    history.push({
-      pathname: "/logout",
-      state: { url: location.pathname },
+  function handleLinkChange(link) {
+    if (link === "/login") {
+      const queryString = {
+        client_id: config.clientId,
+        response_type: "token",
+        state: location.pathname,
+      };
+      return (window.location = `${
+        config.rootUrl
+      }/oauth2/authorize?${qs.stringify(queryString)}`);
+    }
+    if (link === "/logout")
+      return history.push({
+        pathname: link,
+        state: { url: location.pathname },
+      });
+    return history.push({
+      pathname: link,
     });
   }
+
+  const firstSetOfLinks = [
+    { route: "/posts", icon: "reader", text: "Posts" },
+    { route: "/comments", icon: "chatbubble-ellipses", text: "Comments" },
+    { route: "/profile", icon: "person", text: "Profile" },
+  ];
+
+  const secondSetOfLinks = [
+    { route: "/new-post", icon: "add-circle", text: "New Post" },
+    { route: "/settings", icon: "settings", text: "Settings" },
+    { route: "/logout", icon: "log-out", text: "Logout" },
+  ];
 
   return (
     <>
@@ -85,9 +101,13 @@ function TopNavbar() {
         onSearch={handleSubmit}
         isFocused={isFocused}
         onFocusChange={setIsFocused}
-        loggedInStatus={loggedInStatus}
-        onLogin={handleInitializeLogin}
-        onLogout={handleLogout}
+        isLoggedIn={isLoggedIn}
+        onLinkChange={handleLinkChange}
+        user={user}
+        checked={checked}
+        onCheckedChange={handleCheckedChange}
+        firstSetOfLinks={firstSetOfLinks}
+        secondSetOfLinks={secondSetOfLinks}
       />
       <BehindTopNavbarContainer />
     </>
@@ -95,23 +115,3 @@ function TopNavbar() {
 }
 
 export default TopNavbar;
-
-// const performDebounce = useCallback(
-//   _.debounce(async (query) => {
-//     try {
-//       dispatch({ type: "apiCallBegan" });
-
-//       const { data } = await httpService.get(
-//         `https://api.imgur.com/3/gallery/search?q=${query}`
-//       );
-//       const { data: results } = data;
-
-//       if (!query.length)
-//         return dispatch({ type: "getResultsSuccess", payload: [] });
-//       return dispatch({ type: "getResultsSuccess", payload: results });
-//     } catch (error) {
-//       dispatch({ type: "apiCallFailed" });
-//     }
-//   }, 300),
-//   []
-// );

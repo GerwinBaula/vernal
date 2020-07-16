@@ -5,45 +5,45 @@ import DesktopSearchInput from "./DesktopMenu/DesktopSearchInput";
 import DesktopButtons from "./DesktopMenu/DesktopButtons";
 import MobileSearchInput from "./MobileMenu/MobileSearchInput";
 
-function TopNavbarContents({
-  query,
-  results,
-  resultsLoading,
-  onInputChange,
-  onSearch,
-  isFocused,
-  onFocusChange,
-  loggedInStatus,
-  onLogin,
-  onLogout,
-}) {
+function TopNavbarContents(props) {
   return (
-    <div className="container-xl p-0 d-flex align-items-center justify-content-between">
+    <div
+      className={`container-xl d-flex align-items-center justify-content-between ${
+        !props.isLoggedIn ? "px-2" : "pl-0 pr-2"
+      }`}
+    >
       <MobileSearchInput
-        query={query}
-        results={results}
-        resultsLoading={resultsLoading}
-        isFocused={isFocused}
-        onInputChange={onInputChange}
-        onSearch={onSearch}
-        onFocusChange={onFocusChange}
+        query={props.query}
+        results={props.results}
+        resultsLoading={props.resultsLoading}
+        isFocused={props.isFocused}
+        onInputChange={props.onInputChange}
+        onSearch={props.onSearch}
+        onFocusChange={props.onFocusChange}
       />
-      <Name loggedInStatus={loggedInStatus} />
-      <MobileButtons loggedInStatus={loggedInStatus} onLogin={onLogin} />
+      <Name isLoggedIn={props.isLoggedIn} />
+      <MobileButtons
+        isLoggedIn={props.isLoggedIn}
+        onLinkChange={props.onLinkChange}
+        user={props.user}
+        checked={props.checked}
+        onCheckedChange={props.onCheckedChange}
+        firstSetOfLinks={props.firstSetOfLinks}
+        secondSetOfLinks={props.secondSetOfLinks}
+      />
       <DesktopSearchInput
-        loggedInStatus={loggedInStatus}
-        query={query}
-        results={results}
-        resultsLoading={resultsLoading}
-        onInputChange={onInputChange}
-        onSearch={onSearch}
-        isFocused={isFocused}
-        onFocusChange={onFocusChange}
+        isLoggedIn={props.isLoggedIn}
+        query={props.query}
+        results={props.results}
+        resultsLoading={props.resultsLoading}
+        onInputChange={props.onInputChange}
+        onSearch={props.onSearch}
+        isFocused={props.isFocused}
+        onFocusChange={props.onFocusChange}
       />
       <DesktopButtons
-        loggedInStatus={loggedInStatus}
-        onLogin={onLogin}
-        onLogout={onLogout}
+        isLoggedIn={props.isLoggedIn}
+        onLinkChange={props.onLinkChange}
       />
     </div>
   );

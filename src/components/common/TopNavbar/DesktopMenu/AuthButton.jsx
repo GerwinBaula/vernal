@@ -1,10 +1,12 @@
 import React from "react";
 import { css } from "@emotion/core";
 
-function AuthButton({ loggedInStatus, onLogin, onLogout }) {
+function AuthButton({ isLoggedIn, onLinkChange }) {
   return (
     <span
-      onClick={() => (!loggedInStatus ? onLogin() : onLogout())}
+      onClick={() =>
+        !isLoggedIn ? onLinkChange("/login") : onLinkChange("/logout")
+      }
       className="ml-2 py-2 px-4"
       css={css`
         border: 1px solid var(--text-primary);
@@ -19,7 +21,7 @@ function AuthButton({ loggedInStatus, onLogin, onLogout }) {
         }
       `}
     >
-      {!loggedInStatus ? "Login" : "Logout"}
+      {!isLoggedIn ? "Login" : "Logout"}
     </span>
   );
 }

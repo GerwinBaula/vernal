@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { css } from "@emotion/core";
 
-function NewPostButton({ loggedInStatus }) {
+function NewPostButton({ isLoggedIn }) {
   return (
     <>
-      {loggedInStatus && (
+      {isLoggedIn && (
         <Link
           to="/new-post"
           className="mr-2 py-2 px-3"

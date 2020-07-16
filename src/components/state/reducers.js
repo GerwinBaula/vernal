@@ -1,18 +1,5 @@
 export default function (state, action) {
   switch (action.type) {
-    case "userReceived": {
-      const user = action.payload;
-      state.auth.user = user;
-      window.localStorage.setItem("vernal_user", JSON.stringify(user));
-      return;
-    }
-
-    case "userRequestFailed": {
-      const errorMessage = action.payload;
-      console.error(errorMessage);
-      return;
-    }
-
     case "resultsRequest": {
       state.entities.results.isLoading = true;
       return;
@@ -51,31 +38,23 @@ export default function (state, action) {
       return;
     }
 
-    case "finalizeLogin": {
-      const token = action.payload;
-      state.auth.token = token;
-      window.localStorage.setItem("vernal_token", token);
+    case "galleryRequest": {
+      state.entities.gallery.isLoading = true;
       return;
     }
 
-    case "logout": {
-      state.auth.token = null;
-      window.localStorage.removeItem("vernal_token");
-      state.currentUser = {};
-      window.localStorage.removeItem("vernal_user");
+    case "galleryReceived": {
+      const gallery = action.payload;
+      state.entities.gallery.list = gallery;
+      state.entities.gallery.isLoading = false;
+      state.entities.gallery.lastFetch = Date.now();
       return;
     }
 
-    case "toggleTheme": {
-      if (state.theme === "dark") {
-        state.theme = "light";
-        window.localStorage.setItem("vernal_theme", "light");
-        return;
-      } else {
-        state.theme = "dark";
-        window.localStorage.setItem("vernal_theme", "dark");
-        return;
-      }
+    case "galleryRequestFailed": {
+      const errorMessage = action.payload;
+      console.error(errorMessage);
+      return;
     }
 
     case "tagsSliderOffsetLeft": {

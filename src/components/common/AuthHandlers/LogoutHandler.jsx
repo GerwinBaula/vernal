@@ -1,12 +1,10 @@
-import React, { useEffect, useContext } from "react";
-import { DispatchContext } from "../../state/contexts";
+import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
-function LogoutHandler({ location }) {
-  const dispatch = useContext(DispatchContext);
-
+function LogoutHandler({ onLogout, onUserRemove, location }) {
   useEffect(() => {
-    dispatch({ type: "logout" });
+    onLogout();
+    onUserRemove();
   });
 
   return <Redirect to={`${location.state.url}`} />;

@@ -1,20 +1,32 @@
-import React, { useContext } from "react";
-import { StateContext } from "../../state/contexts";
-import stateSelectors from "../../state/selectors";
+import React from "react";
 import SideNavbarMenu from "../../common/SideNavbarMenu/SideNavbarMenu";
 import PagesContent from "./PagesContent";
 import TopNavbar from "../../common/TopNavbar/TopNavbar";
+import useTheme from "../../customHooks/useTheme";
+import useToken from "../../customHooks/useToken";
+import useUser from "../../customHooks/useUser";
 
 function Pages() {
-  const state = useContext(StateContext);
-  const theme = stateSelectors.getCurrentTheme(state);
+  const [theme, handleThemeChange] = useTheme();
+  const [token, handleLogin, handleLogout] = useToken();
+  const [user, handleUserReceive, handleUserRemove] = useUser();
 
   return (
     <div className={theme}>
-      <TopNavbar />
+      <TopNavbar user={user} isLoggedIn={!!token} />
       <div className="container-xl p-0">
-        <SideNavbarMenu />
-        <PagesContent />
+        <SideNavbarMenu
+          theme={theme}
+          onThemeChange={handleThemeChange}
+          isLoggedIn={!!token}
+        />
+        <PagesContent
+          isLoggedIn={!!token}
+          onLogin={handleLogin}
+          onLogout={handleLogout}
+          onUserReceive={handleUserReceive}
+          onUserRemove={handleUserRemove}
+        />
       </div>
     </div>
   );

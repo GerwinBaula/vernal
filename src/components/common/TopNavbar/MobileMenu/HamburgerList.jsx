@@ -1,8 +1,7 @@
 import React from "react";
 import { css } from "@emotion/core";
-import { Link } from "react-router-dom";
 
-function HamburgerList({ links }) {
+function HamburgerList({ links, onLinkChange }) {
   const containerBorder = css`
     border-top: 1px solid var(--text-primary);
   `;
@@ -21,9 +20,9 @@ function HamburgerList({ links }) {
     <div className="px-3 py-1" css={containerBorder}>
       <div className="row">
         {links.map((link) => (
-          <Link
+          <li
             key={link.text}
-            to={link.route}
+            onClick={() => onLinkChange(link.route)}
             className="col-sm py-2 d-flex align-items-center"
             css={linkStyle}
           >
@@ -31,7 +30,7 @@ function HamburgerList({ links }) {
             <span className="ml-4" css={linkTextStyle}>
               {link.text}
             </span>
-          </Link>
+          </li>
         ))}
       </div>
     </div>

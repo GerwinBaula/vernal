@@ -1,36 +1,21 @@
-import React, { useState, useContext } from "react";
-import { StateContext } from "../../../state/contexts";
-import stateSelectors from "../../../state/selectors";
+import React from "react";
 import HamburgerMenu from "./HamburgerMenu";
 import Hamburger from "./Hamburger";
 
-function MobileMenu() {
-  const state = useContext(StateContext);
-  const user = stateSelectors.getCurrentUser(state);
-
-  const [checked, setChecked] = useState(false);
-
-  const firstSetOfLinks = [
-    { route: "/posts", icon: "reader", text: "Posts" },
-    { route: "/comments", icon: "chatbubble-ellipses", text: "Comments" },
-    { route: "/profile", icon: "person", text: "Profile" },
-  ];
-
-  const secondSetOfLinks = [
-    { route: "/new-post", icon: "add-circle", text: "New Post" },
-    { route: "/settings", icon: "settings", text: "Settings" },
-    { route: "/logout", icon: "log-out", text: "Logout" },
-  ];
-
+function MobileMenu(props) {
   return (
     <div className="d-block d-sm-none position-relative">
-      <Hamburger checked={checked} onCheckedChange={setChecked} />
+      <Hamburger
+        checked={props.checked}
+        onCheckedChange={props.onCheckedChange}
+      />
       <HamburgerMenu
-        username={user.url}
-        bio={user.bio}
-        avatar={user.avatar}
-        firstSetOfLinks={firstSetOfLinks}
-        secondSetOfLinks={secondSetOfLinks}
+        username={props.user.url}
+        bio={props.user.bio}
+        avatar={props.user.avatar}
+        firstSetOfLinks={props.firstSetOfLinks}
+        secondSetOfLinks={props.secondSetOfLinks}
+        onLinkChange={props.onLinkChange}
       />
     </div>
   );

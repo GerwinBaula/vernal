@@ -3,15 +3,7 @@ import { css } from "@emotion/core";
 import { useHistory } from "react-router-dom";
 import TopNavbarLoading from "../TopNavbarLoading";
 
-function SearchInput({
-  query,
-  results,
-  resultsLoading,
-  onInputChange,
-  isFocused,
-  onFocusChange,
-  onSearch,
-}) {
+function SearchInput(props) {
   const history = useHistory();
 
   const inputStyle = css`
@@ -61,17 +53,17 @@ function SearchInput({
   `;
 
   return (
-    <form onSubmit={onSearch} className="row position-relative">
+    <form onSubmit={props.onSearch} className="row position-relative">
       <div className="col px-0">
         <input
           type="text"
           className="w-100 py-2 pl-4"
           placeholder="Search some images... or memes."
-          value={query}
-          onChange={onInputChange}
+          value={props.query}
+          onChange={props.onInputChange}
           css={inputStyle}
-          onFocus={() => onFocusChange(true)}
-          onBlur={() => onFocusChange(false)}
+          onFocus={() => props.onFocusChange(true)}
+          onBlur={() => props.onFocusChange(false)}
         />
       </div>
       <div className="px-0 d-flex justify-content-center align-items-center">
@@ -80,16 +72,16 @@ function SearchInput({
           className="h-100 d-flex align-items-center"
           css={buttonStyle}
         >
-          {!resultsLoading ? (
+          {!props.resultsLoading ? (
             <ion-icon name="search-outline"></ion-icon>
           ) : (
             <TopNavbarLoading />
           )}
         </button>
       </div>
-      {!results.length || !isFocused || (
+      {!props.results.length || !props.isFocused || (
         <ul className="list-group position-absolute w-100" css={listStyle}>
-          {results.map((result) => (
+          {props.results.map((result) => (
             <li
               onMouseDown={() => history.push(`/image/${result.id}`)}
               key={result.datetime}

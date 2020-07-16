@@ -6,11 +6,11 @@ import httpService from "../../services/httpService";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
 
-function TagsPage() {
+function TagsPage({ isLoggedIn }) {
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext);
   const history = useHistory();
-  const loggedInStatus = selectors.getLoggedInStatus(state);
+  // const loggedInStatus = selectors.getLoggedInStatus(state);
   const tags = selectors.getTags(state).slice(0, 100);
   const tagsLoading = selectors.getTagsLoadingState(state);
   const tagsLastFetch = selectors.getTagsLastFetch(state);
@@ -40,7 +40,7 @@ function TagsPage() {
   return (
     <div
       className={`container-fluid d-flex flex-column ${
-        !loggedInStatus ? "pt-4 px-3 px-xl-0" : "pt-4 pr-3 pr-xl-0"
+        !isLoggedIn ? "pt-4 px-3 px-xl-0" : "pt-4 pr-3 pr-xl-0"
       }`}
     >
       <div className="mb-2 mx-2">

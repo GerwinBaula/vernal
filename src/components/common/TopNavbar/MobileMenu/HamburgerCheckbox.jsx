@@ -27,7 +27,7 @@ function HamburgerCheckbox({ checked, onCheckedChange }) {
       className="d-none"
       id="toggle-hamburger"
       checked={checked}
-      onChange={() => onCheckedChange(!checked)}
+      onChange={() => onCheckedChange()}
       css={inputStyle}
     />
   );

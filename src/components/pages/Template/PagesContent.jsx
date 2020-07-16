@@ -1,28 +1,31 @@
-import React, { useContext } from "react";
+import React from "react";
 import AllRoutes from "../../common/Routing/AllRoutes";
-import { StateContext } from "../../state/contexts";
-import stateSelectors from "../../state/selectors";
 
-function PagesContent() {
-  const state = useContext(StateContext);
-  const loggedInStatus = stateSelectors.getLoggedInStatus(state);
-
+function PagesContent(props) {
   const mainStyle = {
-    marginLeft: `${!loggedInStatus ? "0px" : "var(--sidenav-offset-hovered)"}`,
+    marginLeft: `${
+      !props.isLoggedIn ? "0px" : "var(--sidenav-offset-hovered)"
+    }`,
     "@media (max-width: 1200px)": {
-      marginLeft: `${!loggedInStatus ? "0px" : "var(--sidenav-offset)"}`,
+      marginLeft: `${!props.isLoggedIn ? "0px" : "var(--sidenav-offset)"}`,
     },
     "@media (max-width: 575px)": {
       marginLeft: "0px",
       marginBottom: `${
-        !loggedInStatus ? "0px" : "var(--sidenav-offset-mobile)"
+        !props.isLoggedIn ? "0px" : "var(--sidenav-offset-mobile)"
       }`,
     },
   };
 
   return (
     <main css={mainStyle}>
-      <AllRoutes />
+      <AllRoutes
+        isLoggedIn={props.isLoggedIn}
+        onLogin={props.onLogin}
+        onLogout={props.onLogout}
+        onUserReceive={props.onUserReceive}
+        onUserRemove={props.onUserRemove}
+      />
     </main>
   );
 }

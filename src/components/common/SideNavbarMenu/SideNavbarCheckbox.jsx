@@ -49,7 +49,7 @@ function SideNavbarCheckbox({ checked, onCheckedChange }) {
       className="d-none"
       id="toggle-sidenav"
       checked={checked}
-      onChange={() => onCheckedChange(!checked)}
+      onChange={() => onCheckedChange()}
       css={checkboxStyle}
     />
   );

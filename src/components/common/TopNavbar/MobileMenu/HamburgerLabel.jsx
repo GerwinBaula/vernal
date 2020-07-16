@@ -34,7 +34,7 @@ function HamburgerLabel({ checked, onCheckedChange }) {
     <label
       htmlFor="toggle-hamburger"
       className="mt-3 hamburger"
-      onMouseLeave={() => checked && onCheckedChange(!checked)}
+      onMouseLeave={() => checked && onCheckedChange()}
       css={labelStyle}
     />
   );

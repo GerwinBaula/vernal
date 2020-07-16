@@ -2,20 +2,18 @@ import React from "react";
 import HamburgerLabel from "./HamburgerLabel";
 import HamburgerCheckbox from "./HamburgerCheckbox";
 
-function Hamburger({
-  checked,
-  firstSetOfLinks,
-  secondSetOfLinks,
-  onCheckedChange,
-}) {
+function Hamburger(props) {
   return (
     <>
-      <HamburgerCheckbox checked={checked} onCheckedChange={onCheckedChange} />
+      <HamburgerCheckbox
+        checked={props.checked}
+        onCheckedChange={props.onCheckedChange}
+      />
       <HamburgerLabel
-        checked={checked}
-        firstSetOfLinks={firstSetOfLinks}
-        secondSetOfLinks={secondSetOfLinks}
-        onCheckedChange={onCheckedChange}
+        checked={props.checked}
+        firstSetOfLinks={props.firstSetOfLinks}
+        secondSetOfLinks={props.secondSetOfLinks}
+        onCheckedChange={props.onCheckedChange}
       />
     </>
   );

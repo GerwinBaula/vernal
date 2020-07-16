@@ -1,12 +1,9 @@
-import React, { useEffect, useContext } from "react";
-import { DispatchContext } from "../../state/contexts";
+import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import httpService from "../../services/httpService";
 import qs from "qs";
 
-function LoginHandler({ location }) {
-  const dispatch = useContext(DispatchContext);
-
+function LoginHandler({ onLogin, onUserReceive, location }) {
   useEffect(() => {
     const query = qs.parse(location.hash.replace("#", ""));
 
@@ -17,16 +14,15 @@ function LoginHandler({ location }) {
         } = await httpService.get(
           `https://api.imgur.com/3/account/${username}`
         );
-
-        dispatch({ type: "userReceived", payload: userData });
+        onUserReceive(userData);
       } catch (error) {
-        dispatch({ type: "userRequestFailed", payload: error.message });
+        console.error(error.message);
       }
     }
 
     if ("access_token" in query) {
       getUser(query.account_username);
-      return dispatch({ type: "finalizeLogin", payload: query.access_token });
+      return onLogin(query.access_token);
     }
     return;
   });

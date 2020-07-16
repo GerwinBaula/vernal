@@ -1,10 +1,10 @@
 import React from "react";
 import { css } from "@emotion/core";
 
-function MobileAuthButton({ onLogin }) {
+function MobileAuthButton({ onLinkChange }) {
   return (
     <span
-      onClick={() => onLogin()}
+      onClick={() => onLinkChange("/login")}
       className="py-2 px-4 d-block d-block d-sm-none"
       css={css`
         border: 1px solid var(--text-primary);

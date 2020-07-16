@@ -3,13 +3,7 @@ import { css } from "@emotion/core";
 import HamburgerInfo from "./HamburgerInfo";
 import HamburgerList from "./HamburgerList";
 
-function HamburgerMenu({
-  username,
-  bio,
-  avatar,
-  firstSetOfLinks,
-  secondSetOfLinks,
-}) {
+function HamburgerMenu(props) {
   const hamburgerMenuStyle = css`
     top: 40px;
     left: 100px;
@@ -25,9 +19,19 @@ function HamburgerMenu({
 
   return (
     <div className="mobile-menu position-absolute" css={hamburgerMenuStyle}>
-      <HamburgerInfo username={username} bio={bio} avatar={avatar} />
-      <HamburgerList links={firstSetOfLinks} />
-      <HamburgerList links={secondSetOfLinks} />
+      <HamburgerInfo
+        username={props.username}
+        bio={props.bio}
+        avatar={props.avatar}
+      />
+      <HamburgerList
+        links={props.firstSetOfLinks}
+        onLinkChange={props.onLinkChange}
+      />
+      <HamburgerList
+        links={props.secondSetOfLinks}
+        onLinkChange={props.onLinkChange}
+      />
     </div>
   );
 }

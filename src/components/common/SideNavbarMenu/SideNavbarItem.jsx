@@ -65,7 +65,7 @@ function SideNavbarItem({ checked, item, onCheckedChange, onThemeChange }) {
 
   function getClickFunction(isLastItem) {
     if (isLastItem) onThemeChange();
-    checked && onCheckedChange(!checked);
+    checked && onCheckedChange();
   }
 
   return (

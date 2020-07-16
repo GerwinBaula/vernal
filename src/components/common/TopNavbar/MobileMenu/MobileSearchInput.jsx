@@ -3,15 +3,7 @@ import { css } from "@emotion/core";
 import { useHistory } from "react-router-dom";
 import TopNavbarLoading from "../TopNavbarLoading";
 
-function MobileSearchInput({
-  query,
-  results,
-  resultsLoading,
-  onInputChange,
-  isFocused,
-  onFocusChange,
-  onSearch,
-}) {
+function MobileSearchInput(props) {
   const history = useHistory();
 
   const formStyle = css`
@@ -61,7 +53,7 @@ function MobileSearchInput({
 
   return (
     <form
-      onSubmit={onSearch}
+      onSubmit={props.onSearch}
       className="d-flex flex-fill d-sm-none position-relative"
       css={formStyle}
     >
@@ -70,7 +62,7 @@ function MobileSearchInput({
         className="m-0 pl-2 py-2 pr-1 d-flex justify-content-center align-items-center"
         css={buttonStyle}
       >
-        {!resultsLoading ? (
+        {!props.resultsLoading ? (
           <ion-icon name="search-outline"></ion-icon>
         ) : (
           <TopNavbarLoading />
@@ -80,15 +72,15 @@ function MobileSearchInput({
         type="text"
         className="w-100 mr-3 pl-1"
         placeholder="Search some images... or memes."
-        value={query}
-        onChange={onInputChange}
-        onFocus={() => onFocusChange(true)}
-        onBlur={() => onFocusChange(false)}
+        value={props.query}
+        onChange={props.onInputChange}
+        onFocus={() => props.onFocusChange(true)}
+        onBlur={() => props.onFocusChange(false)}
         css={inputStyle}
       />
-      {!results.length || !isFocused || (
+      {!props.results.length || !props.isFocused || (
         <ul className="list-group position-absolute w-100" css={listStyle}>
-          {results.map((result) => (
+          {props.results.map((result) => (
             <li
               onMouseDown={() => history.push(`/image/${result.id}`)}
               key={result.datetime}

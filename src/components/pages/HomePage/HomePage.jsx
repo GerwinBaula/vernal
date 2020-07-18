@@ -127,7 +127,7 @@ function HomePage({ isLoggedIn }) {
         );
         let { data: gallery } = data.data;
 
-        dispatch({ type: "galleryReceived", payload: gallery.slice(0, 1) });
+        dispatch({ type: "galleryReceived", payload: gallery.slice(0, 20) });
         return;
       } catch (error) {
         dispatch({ type: "galleryRequestFailed", payload: error.message });
@@ -422,13 +422,13 @@ function HomePage({ isLoggedIn }) {
                   width: 100%;
                 `}
               >
-                <img
+                {/* <img
                   css={css`
                     width: 100%;
                   `}
                   src={`https://i.imgur.com/${item.cover || item.id}.jpg`}
-                  alt="post"
-                />
+                  alt="post-cover"
+                /> */}
               </li>
             ))}
           </ul>

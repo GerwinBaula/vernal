@@ -1,24 +1,5 @@
 export default function (state, action) {
   switch (action.type) {
-    case "resultsRequest": {
-      state.entities.results.isLoading = true;
-      return;
-    }
-
-    case "resultsReceived": {
-      const results = action.payload;
-      const slicedResults = results.slice(0, 5);
-      state.entities.results.isLoading = false;
-      state.entities.results.list = slicedResults;
-      return;
-    }
-
-    case "resultsRequestFailed": {
-      const errorMessage = action.payload;
-      console.error(errorMessage);
-      return;
-    }
-
     case "tagsRequest": {
       state.entities.tags.isLoading = true;
       return;

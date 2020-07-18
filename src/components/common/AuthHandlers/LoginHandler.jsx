@@ -27,7 +27,12 @@ function LoginHandler({ onLogin, onUserReceive, location }) {
     return;
   });
 
-  return <Redirect to={`${location.search.replace("?state=%2F", "/")}`} />;
+  // Put some chain functions in the string to change all %2F to /
+  return (
+    <Redirect
+      to={`${location.search.replace("?state=%2F", "/").replace("%2F", "/")}`}
+    />
+  );
 }
 
 export default LoginHandler;

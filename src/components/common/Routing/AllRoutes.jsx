@@ -16,80 +16,85 @@ import LoginHandler from "../AuthHandlers/LoginHandler";
 import LogoutHandler from "../AuthHandlers/LogoutHandler";
 import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
 import ProtectedRoute from "./ProtectedRoute";
+import UnprotectedRoute from "./UnprotectedRoute";
 
-function AllRoutes(outsideProps) {
+function AllRoutes(props) {
   return (
     <Switch>
-      <Route
+      <UnprotectedRoute
         exact
         path="/"
-        render={(props) => (
-          <HomePage {...props} isLoggedIn={outsideProps.isLoggedIn} />
-        )}
+        component={HomePage}
+        isLoggedIn={props.isLoggedIn}
       />
+      } />
       <ProtectedRoute
         path="/comments"
         component={CommentsPage}
-        isLoggedIn={outsideProps.isLoggedIn}
+        isLoggedIn={props.isLoggedIn}
       />
       <ProtectedRoute
         path="/favorites"
         component={FavoritesPage}
-        isLoggedIn={outsideProps.isLoggedIn}
+        isLoggedIn={props.isLoggedIn}
       />
       <ProtectedRoute
         path="/images"
         component={ImagesPage}
-        isLoggedIn={outsideProps.isLoggedIn}
+        isLoggedIn={props.isLoggedIn}
       />
       <ProtectedRoute
         path="/new-post"
         component={NewPostPage}
-        isLoggedIn={outsideProps.isLoggedIn}
+        isLoggedIn={props.isLoggedIn}
       />
       <ProtectedRoute
         path="/posts"
         component={PostsPage}
-        isLoggedIn={outsideProps.isLoggedIn}
+        isLoggedIn={props.isLoggedIn}
       />
       <ProtectedRoute
         path="/profile"
         component={ProfilePage}
-        isLoggedIn={outsideProps.isLoggedIn}
+        isLoggedIn={props.isLoggedIn}
       />
-      <Route path="/results" component={ResultsPage} />
-      <Route
+      <UnprotectedRoute
+        path="/results"
+        component={ResultsPage}
+        isLoggedIn={props.isLoggedIn}
+      />
+      <UnprotectedRoute
         path="/tags"
-        render={(props) => (
-          <TagsPage {...props} isLoggedIn={outsideProps.isLoggedIn} />
-        )}
+        component={TagsPage}
+        isLoggedIn={props.isLoggedIn}
       />
-      <Route path="/tag/:id" component={TagPage} />
+      } />
+      <UnprotectedRoute
+        path="/tag/:id"
+        component={TagPage}
+        isLoggedIn={props.isLoggedIn}
+      />
       <ProtectedRoute
         path="/settings"
         component={SettingsPage}
-        isLoggedIn={outsideProps.isLoggedIn}
+        isLoggedIn={props.isLoggedIn}
       />
-      <Route path="/image/:id" component={ImagePage} />
-      <Route
+      <UnprotectedRoute
+        path="/image/:id"
+        component={ImagePage}
+        isLoggedIn={props.isLoggedIn}
+      />
+      <UnprotectedRoute
         path="/oauth2/callback"
-        render={(props) => (
-          <LoginHandler
-            {...props}
-            onLogin={outsideProps.onLogin}
-            onUserReceive={outsideProps.onUserReceive}
-          />
-        )}
+        component={LoginHandler}
+        onLogin={props.onLogin}
+        onUserReceive={props.onUserReceive}
       />
-      <Route
+      <UnprotectedRoute
         path="/logout"
-        render={(props) => (
-          <LogoutHandler
-            {...props}
-            onLogout={outsideProps.onLogout}
-            onUserRemove={outsideProps.onUserRemove}
-          />
-        )}
+        component={LogoutHandler}
+        onLogout={props.onLogout}
+        onUserRemove={props.onUserRemove}
       />
       <Route component={NotFoundPage} />
     </Switch>

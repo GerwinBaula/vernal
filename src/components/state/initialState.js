@@ -1,9 +1,5 @@
 export default {
   entities: {
-    results: {
-      list: [],
-      isLoading: null,
-    },
     tags: {
       list: [],
       isLoading: null,
